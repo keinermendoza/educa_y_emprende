@@ -1,0 +1,2 @@
+rav:
+  web: docker exec -it educa_y_emprende-web-1 bash

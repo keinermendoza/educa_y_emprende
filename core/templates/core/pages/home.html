@@ -1,0 +1,14 @@
+{% load static %}
+<c-layout.base title="Inicio">
+    <c-slot name="script">
+        <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    </c-slot>
+
+    <h1 class="font-semibold">Bienvenido</h1>
+
+    <c-card title="Trees" url="core:home">
+        We have the best trees
+    </c-card>
+
+    <p class="fino">fino</p>
+</c-layout.base >
