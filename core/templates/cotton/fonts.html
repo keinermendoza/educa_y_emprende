@@ -1,0 +1,20 @@
+{% load process_string %}
+
+<style>
+    @font-face{
+        font-family: 'crimson';
+        src: url("{{'core/fonts/CrimsonPro-Regular.woff'|clean_amperson}}") format('woff');
+    }
+    @font-face{
+        font-family: 'lalezar';
+        src: url("{{'core/fonts/Lalezar-Regular.woff'|clean_amperson }}") format('woff');
+    }
+
+    html {
+        font-family: "crimson", system-ui, serif;
+    }
+
+    h1, h2, h3 {
+        font-family: "lalezar", system-ui, sans-serif;
+    }
+</style>

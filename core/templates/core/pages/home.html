@@ -2,13 +2,31 @@
 <c-layout.base title="Inicio">
     <c-slot name="script">
         <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+        <c-fonts />
     </c-slot>
 
-    <h1 class="font-semibold">Bienvenido</h1>
+    <c-layout.section id="hero">
+        <h1 class="font-semibold">Bienvenido</h1>
 
-    <c-card title="Trees" url="core:home">
-        We have the best trees
-    </c-card>
+        <c-card title="Trees" url="core:home">
+            We have the best trees
+        </c-card>
 
-    <p class="fino">fino</p>
+        <p class="fino">fino</p>
+
+        <c-link_button big href="core:home" >
+            Ver Cursos
+        </c-link_button> 
+    
+    </c-layout.section>
+
+    <c-layout.section id="servicios" extra_class="bg-[#F5F5F5]">
+        <c-brand_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+            <c-slot name="description">
+                Aprende esas habilidades que te hacen feliz.
+                Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+            </c-slot>
+        </c-brand_card >
+    <c-layout.section >
+
 </c-layout.base >

@@ -1,0 +1,14 @@
+{% load static %}
+<article class="relative shadow-md rounded-md flex max-w-xl  h-full">
+    <svg class="absolute left-0" width="360" height="234" viewBox="0 0 513 334" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M201.883 412.304C131.217 409.482 55.6555 409.596 4.36992 360.899C-47.2738 311.861 -58.0467 236.405 -58.3632 165.189C-58.6753 94.9684 -48.6859 19.8656 2.64138 -28.0572C52.3586 -74.4766 126.237 -69.8505 194.25 -70.6684C261.877 -71.4817 330.678 -72.0085 385.687 -32.6636C449.631 13.0725 504.626 77.8617 511.42 156.185C518.578 238.699 485.082 324.746 421.27 377.546C361.967 426.614 278.792 415.375 201.883 412.304Z" fill="white"/>
+    </svg>
+    <div class="relative flex flex-col gap-4 w-[60%] p-6 text-[#2D294B] ">
+        <h3 class="text-2xl">{{title}}</h3>
+        <p>{{description}}</p>
+        <c-link_button href="{{href}}" big >Ver Cursos</c-link_button>
+    </div>
+    <figure class="w-[50%] flex-grow">
+        <img class="object-cover h-full w-full" src="{% static img %}" alt="representacion de la categoria {{title}}">
+    </figure>
+</article>
