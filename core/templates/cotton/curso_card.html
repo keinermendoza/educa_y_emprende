@@ -1,0 +1,15 @@
+{% load static %}
+<article class="bg-white overflow-hidden shadow-xl rounded-lg flex flex-col">
+    <!-- image -->
+    <figure class="h-56 w-full">
+        <img class="object-cover h-full w-full" src="{% static img %}" alt="curso {{title}}">
+    </figure> 
+    
+    <div class="flex-grow flex flex-col gap-3 md:gap-4 p-4">
+        <h4 class="font-medium text-xl sm:text-[1.65rem]">{{title}}</h4>
+        <p class="flex-grow leading-tight text-base sm:text-lg">{{description}}</p>
+        <p class="leading-tight text-base sm:text-lg">{{categories}}</p>
+        <c-link_button href="{{href}}" extra_class="ml-auto" >Ver Más</c-link_button>
+    </div>
+    
+</article>

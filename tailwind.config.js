@@ -7,7 +7,16 @@ module.exports = {
 
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xs': '475px',
+      },
+      colors: {
+        'c-black': '#2D294B',
+        'primary': '#1b98e0',
+        'secundary': '#00bfb3',
+      },
+    },
   },
   plugins: [],
 }

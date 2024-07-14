@@ -5,28 +5,55 @@
         <c-fonts />
     </c-slot>
 
-    <c-layout.section id="hero">
-        <h1 class="font-semibold">Bienvenido</h1>
 
-        <c-card title="Trees" url="core:home">
-            We have the best trees
-        </c-card>
+    <c-layout.section id="search" extra_class="bg-[#F5F5F5]">
+        <c-search_bar />
+    </c-layout.section >
 
-        <p class="fino">fino</p>
 
-        <c-link_button big href="core:home" >
-            Ver Cursos
-        </c-link_button> 
-    
-    </c-layout.section>
+    <c-layout.section id="servicios" extra_class="bg-c-black relative">
+        <c-triangles extra_class="top-0 left-0 w-[40vw] max-w-sm" /> 
+        <div class="flex flex-col gap-4">
+            <c-brand_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+            </c-brand_card >
+            <c-brand_card title="Crecimiento Profesional" href="core:home" img="core/images/oficina.jpg" >
+                <c-slot name="description">
+                    Incorpora habilidades nuevas que te permitan crecer en tu puesto de trabajo,
+                    cambiar de área o incluso crear tu propio emprendimiento.
+                </c-slot>
+            </c-brand_card >
+        </div>
+    </c-layout.section >
 
-    <c-layout.section id="servicios" extra_class="bg-[#F5F5F5]">
-        <c-brand_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
-            <c-slot name="description">
-                Aprende esas habilidades que te hacen feliz.
-                Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
-            </c-slot>
-        </c-brand_card >
-    <c-layout.section >
+    <c-layout.section id="cursos" extra_class="bg-[#F5F5F5] relative overflow-hidden">
+        <c-triangles extra_class="bottom-0 -right-2 w-[40vw] h-auto max-w-sm" /> 
+
+        <div class="relative z-10 grid xs:grid-cols-2 lg:grid-cols-3 gap-4">
+            <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+
+            <c-curso_card title="Crecimiento Profesional" href="core:home" img="core/images/oficina.jpg" >
+                <c-slot name="description">
+                    Incorpora habilidades nuevas que te permitan crecer en tu puesto de trabajo,
+                    cambiar de área o incluso crear tu propio emprendimiento.
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+        </div>
+    </c-layout.section >
+   
 
 </c-layout.base >
