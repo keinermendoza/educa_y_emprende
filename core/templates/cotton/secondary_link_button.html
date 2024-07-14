@@ -1,0 +1,13 @@
+{% if btn %}
+<button class="rounded text-white bg-secondary-gradient
+    w-fit text-lg px-6 py-2 flex items-center sm:text-xl
+    {% if big %}  sm:px-12{% else%}sm:px-8{% endif %}
+    {{extra_class}}">{{slot}}</button>
+
+{% else %}
+<a class="rounded text-white bg-secondary-gradient
+    w-fit text-lg px-6 py-2 flex items-center sm:text-xl
+    {% if big %}  sm:px-12{% else%}sm:px-8{% endif %}
+    {{extra_class}}"
+    href="{% url href %}">{{slot}}</a>
+{% endif %}

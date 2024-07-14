@@ -1,3 +1,60 @@
-<c-layout.section id="contacto" extra_class="bg-[#F5F5F5] ">
+{% load static %}
+
+<c-layout.section id="contacto" extra_class="relative">
+    
+    <!-- backgrounds -->
+    <figure class="absolute top-0 left-0 z-0 w-full h-full">
+        <img class="object-cover w-full h-full" 
+            src="{% static 'core/images/contacto.jpg' %}" alt="contactanos, estamos listos para atenderte">
+    </figure>
+    <div class="bg-c-black bg-opacity-85 absolute top-0 left-0 z-10 w-full h-full"></div>
+    
+
+    <!-- main -->
+    <div class="relative z-20 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-10">
+        <div class="text-white max-w-lg">
+            <h2 class="text-2xl md:text-4xl mb-5">Escribenos</h2>
+            <p class="text-xl md:text-2xl leading-tight">
+                Al enviar este formulario, recibirás una confirmación automática en tu correo. 
+                Nuestro equipo de soporte revisará tu mensaje y te responderá a la mayor brevedad posible. 
+                ¡Estamos aquí para ayudarte con cualquier duda o pregunta que tengas sobre nuestros cursos!
+            </p>
+        </div>
+
+
+        <c-form_transparent extra_class="w-full max-w-sm">
+            <label class="text-xl" for="name">Nombre</label>
+            {% for error in form.name.errors %}
+                <p class="max-w-80 text-red-900 text-sm mb-[0.15em]">{{ error }}</p>
+            {% endfor %}
+            <input 
+                class="transition-colors hover:cursor-pointer border-2 hover:border-c-black px-2 py-1 rounded-md" 
+                type="text" required name="name" id="name" 
+                value="{% if form.name %}{{ form.name.value|default_if_none:"" }}{% endif %}">
+            <label class="text-xl" for="best_email">Email</label>
+
+            {% for error in form.best_email.errors %}
+                <p class="max-w-80 text-red-900 text-sm mb-[0.15em]">{{ error }}</p>
+            {% endfor %}
+            <input
+                class="transition-colors hover:cursor-pointer border-2 hover:border-c-black px-2 py-1 rounded-md" 
+                type="email" name="best_email" id="best_email"
+                value="{% if form.best_email %}{{ form.best_email.value|default_if_none:"" }}{% endif %}">
+
+            <div>
+                <label class="text-xl" for="message">Mensaje</label>
+                <p class="text-sm">Aqui puedes hacer tu conslta o comentario</p>
+            </div>
+            
+            
+            {% for error in form.message.errors %}
+                <p class="max-w-80 text-red-900 text-sm mb-[0.15em]">{{ error }}</p>
+            {% endfor %}
+            <textarea
+                class="transition-colors hover:cursor-pointer border-2 hover:border-c-black px-2 py-1 rounded-md" 
+                name="message" id="message" cols="30" required rows="4">{% if form.message %}{{ form.message.value|default_if_none:"" }}{% endif %}</textarea>
+                      
+        </c-form_transparent >
+    </div>
 
 </c-layout.section >
