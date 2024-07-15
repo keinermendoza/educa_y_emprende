@@ -6,6 +6,53 @@
     </c-slot>
 
 
+    <c-layout.section id="hero" extra_class="bg-[#F5F5F5] relative h-[80vh] overflow-hidden">
+        <!-- decoration for desktop -->
+        <div class="hidden xl:block ">
+            <svg class="absolute z-10 left-0 inset-y-0 h-full w-[60%]" width="1094" height="1000" viewBox="0 0 1094 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M492.292 1456.29C198.066 1600.87 -171.861 1668.71 -442.123 1483.13C-716.187 1294.94 -755.552 924.489 -766.087 592.192C-776.282 270.639 -734.381 -66.7509 -498.184 -285.156C-256.74 -508.414 94.865 -576.299 414.64 -499.596C712.381 -428.179 953.7 -198.618 1059.9 88.5754C1151.12 335.24 1004.15 579.05 903.35 821.947C801.738 1066.79 730.198 1339.38 492.292 1456.29Z" fill="#2D294B" stroke="white" stroke-width="10"/>
+            </svg>
+            <svg class="absolute z-10 -left-5 inset-y-0 h-full w-[60%]" width="1094" height="1000" viewBox="0 0 1094 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M492.292 1456.29C198.066 1600.87 -171.861 1668.71 -442.123 1483.13C-716.187 1294.94 -755.552 924.489 -766.087 592.192C-776.282 270.639 -734.381 -66.7509 -498.184 -285.156C-256.74 -508.414 94.865 -576.299 414.64 -499.596C712.381 -428.179 953.7 -198.618 1059.9 88.5754C1151.12 335.24 1004.15 579.05 903.35 821.947C801.738 1066.79 730.198 1339.38 492.292 1456.29Z" fill="#2D294B" stroke="white" stroke-width="10"/>
+            </svg>
+            <c-triangles extra_class="top-0 left-0 w-[10vw] z-10" /> 
+            <c-triangle_hero extra_class="bottom-0 left-0 w-[30vw] z-10" /> 
+        </div>
+        
+
+        <!-- decoration for tablet & mobile -->
+        <div class="block xl:hidden absolute top-0 left-0 w-full h-full bg-c-black bg-opacity-90 z-20"></div>
+        <c-triangles extra_class="top-0 left-0 min-w-24 w-[10vw] z-20" /> 
+        <c-triangle_hero extra_class="bottom-0 left-0 min-w-80 w-[30vw] z-20" /> 
+
+        <figure class="absolute right-0 inset-y-0 w-full xl:w-[80%] h-full">
+            <img class="object-cover w-full h-full" 
+                src="{% static 'core/images/hero.png' %}" alt="Aprende con nuestro equipo de Educa y Emprende">
+        </figure>
+
+        <!-- main text -->
+        <div class="relative z-30 max-w-2xl h-full flex flex-col gap-8 sm:gap-12 pt-12 text-white">
+            <div class="flex flex-col-reverse sm:flex-row items-center gap-8">
+                <figure class="shrink-0">
+                    <img class="w-32 h-32" src="{% static 'core/images/educa.png' %}" alt="Logo de Educa y Emprende">
+                </figure>
+                <h1 class="text-center sm:text-start text-4xl sm:text-6xl">Educación Online</h1>
+            </div>
+            <div class="hidden xxs:block sm:hidden"></div>
+            <p class="text-center text-lg xxs:text-xl sm:text-start sm:text-2xl max-w-lg">
+                Nuestro propósito es ayudarte a descubrir y desarrollar tus habilidades.
+                Nos emociona compartir contigo nuestra selección de cursos y contribuir
+                con nuestro conocimiento al cumplimiento de tus metas.
+            </p>
+            <c-primary_link_button hero extra_class="mx-auto sm:m-0" href="core:home">
+                Ver Cursos
+            </c-primary_link_button>
+        </div>
+
+
+
+    </c-layout.section >
+
     <c-layout.section id="search" extra_class="bg-[#F5F5F5]">
         <c-search_bar />
     </c-layout.section >

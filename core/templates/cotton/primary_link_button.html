@@ -1,5 +1,5 @@
 <a class="rounded text-white bg-primary-gradient
     w-fit text-lg px-6 py-2 flex items-center sm:text-xl
-    {% if big %}  sm:px-12{% else%}sm:px-8{% endif %}
+    {% if big %}  sm:px-12 {% elif hero %}font-medium px-14 sm:py-3 text-xl sm:text-2xl{% else%}sm:px-8{% endif %}
     {{extra_class}}"
     href="{% url href %}">{{slot}}</a>

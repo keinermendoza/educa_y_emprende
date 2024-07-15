@@ -9,7 +9,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xs': '475px',
+        'xs': '420px',
+        'xxs':'320px' 
       },
       colors: {
         'c-black': '#2D294B',
