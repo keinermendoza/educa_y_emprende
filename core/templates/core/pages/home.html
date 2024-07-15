@@ -6,6 +6,13 @@
         <script src="{% static 'js/index.js' %}"></script>
     </c-slot>
 
+    <c-layout.section id="demo container" >
+
+       
+       
+    </c-layout.section id="demo container" >
+
+
 
     <c-layout.section id="hero" extra_class="relative  min-h-[min(750px,100vh)] overflow-hidden">
         <!-- decoration for desktop -->
@@ -55,13 +62,13 @@
     </c-layout.section >
 
     <c-layout.section id="general" extra_class="bg-[#F5F5F5]">
-        <div class="flex flex-col sm:flex-row gap-5 justify-between items-center">
+        <div class="flex flex-col sm:flex-row gap-10 justify-between items-center sm:items-start">
             <div class="pt-6">
                 <blockquote class="text-xl max-w-sm relative pt-8">
                     <c-quotes open extra_class="absolute w-10 top-0 left-0" />
-                    <p class="inline ms-6  ">La educación no es una preparación para la vida. La educación es la vida misma. </p>
-                    <c-quotes extra_class="relative inline-block w-16" />
-                    <cite class="ms-6">John Dewey</cite>
+                    <p class="inline-block ms-6  ">La educación no es una preparación para la vida. La educación es la vida misma. </p>
+                    <c-quotes extra_class="absolute bottom-2 -right-4 inline-block w-16" />
+                    <cite class="block m-6">John Dewey</cite>
                 </blockquote>
 
                 <div class="pt-10 flex flex-col gap-6 max-w-lg text-xl">
@@ -78,7 +85,20 @@
                 </div>
             </div>
 
-            <div></div>
+            <div class="w-full max-w-xl  flex flex-col gap-6">
+                <c-brand_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                    <c-slot name="description">
+                        Aprende esas habilidades que te hacen feliz.
+                        Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                    </c-slot>
+                </c-brand_card >
+                <c-brand_card title="Crecimiento Profesional" href="core:home" img="core/images/oficina.jpg" >
+                    <c-slot name="description">
+                        Incorpora habilidades nuevas que te permitan crecer en tu puesto de trabajo,
+                        cambiar de área o incluso crear tu propio emprendimiento.
+                    </c-slot>
+                </c-brand_card >
+            </div>
         </div>
     </c-layout.section >
         
@@ -222,18 +242,7 @@
     <c-layout.section id="servicios" extra_class="bg-c-black relative">
         <c-triangles extra_class="top-0 left-0 w-[40vw] max-w-sm" /> 
         <div class="flex flex-col gap-4">
-            <c-brand_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
-                <c-slot name="description">
-                    Aprende esas habilidades que te hacen feliz.
-                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
-                </c-slot>
-            </c-brand_card >
-            <c-brand_card title="Crecimiento Profesional" href="core:home" img="core/images/oficina.jpg" >
-                <c-slot name="description">
-                    Incorpora habilidades nuevas que te permitan crecer en tu puesto de trabajo,
-                    cambiar de área o incluso crear tu propio emprendimiento.
-                </c-slot>
-            </c-brand_card >
+            
         </div>
     </c-layout.section >
 
