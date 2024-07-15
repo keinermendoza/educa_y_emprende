@@ -3,10 +3,11 @@
     <c-slot name="script">
         <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
         <c-fonts />
+        <script src="{% static 'js/index.js' %}"></script>
     </c-slot>
 
 
-    <c-layout.section id="hero" extra_class="bg-[#F5F5F5] relative h-[80vh] overflow-hidden">
+    <c-layout.section id="hero" extra_class="relative  min-h-[min(750px,100vh)] overflow-hidden">
         <!-- decoration for desktop -->
         <div class="hidden xl:block ">
             <svg class="absolute z-10 left-0 inset-y-0 h-full w-[60%]" width="1094" height="1000" viewBox="0 0 1094 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,8 +54,168 @@
 
     </c-layout.section >
 
+    <c-layout.section id="general" extra_class="bg-[#F5F5F5]">
+        <div class="flex flex-col sm:flex-row gap-5 justify-between items-center">
+            <div class="pt-6">
+                <blockquote class="text-xl max-w-sm relative pt-8">
+                    <c-quotes open extra_class="absolute w-10 top-0 left-0" />
+                    <p class="inline ms-6  ">La educación no es una preparación para la vida. La educación es la vida misma. </p>
+                    <c-quotes extra_class="relative inline-block w-16" />
+                    <cite class="ms-6">John Dewey</cite>
+                </blockquote>
+
+                <div class="pt-10 flex flex-col gap-6 max-w-lg text-xl">
+                    <h2 class="text-4xl">Nuestra Selección</h2>
+                    <p>
+                        Creemos que, como personas, nuestro crecimiento debe ser integral.
+                        Es por ello que nuestra selección de cursos abarca desde aspectos de desarrollo
+                        personal hasta aspectos específicos de crecimiento profesional.
+                    </p>
+                    <p>
+                        Para facilitar la navegación entre cursos, hemos separado nuestro contenido
+                        en dos secciones principales: <b>Desarrollo Personal</b> y <b>Crecimiento Profesional.</b>  
+                    </p>
+                </div>
+            </div>
+
+            <div></div>
+        </div>
+    </c-layout.section >
+        
+
     <c-layout.section id="search" extra_class="bg-[#F5F5F5]">
-        <c-search_bar />
+        
+        <div class="text-center mb-4">
+            <h2 class="text-4xl mb-2">Desarrollo Personal</h2>
+            <h3 class="text-2xl">Cursos Recientes</h3>
+        </div>
+
+        <swiper-container class="w-full" autoplay="true" slides-per-view="4" space-between="20" grab-cursor="true" speed="8000" loop="true">
+
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide><swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide><swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+        </swiper-container>
+
+        <div class="mt-12 grid place-content-center">
+            <c-secondary_link_button href="core:home">Ir a Desarrollo Personal</c-secondary_link_button>
+        </div>
     </c-layout.section >
 
 
