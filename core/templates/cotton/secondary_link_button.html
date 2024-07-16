@@ -1,11 +1,16 @@
 {% if btn %}
-<button class="rounded text-white bg-secondary-gradient
+<button class="relative overflow-hidden rounded text-white bg-secondary-gradient
+    hover:after:opacity-10 after:transition-all after:duration-200 after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black after:opacity-0
+
     w-fit text-lg px-6 py-2 flex items-center sm:text-xl
     {% if big %}  sm:px-12{% else%}sm:px-8{% endif %}
     {{extra_class}}">{{slot}}</button>
 
 {% else %}
-<a class="rounded text-white bg-secondary-gradient
+<a class="relative overflow-hidden  rounded text-white bg-secondary-gradient
+    hover:after:opacity-10 after:transition-all after:duration-200 after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black after:opacity-0
+    hover:outline outline-2 outline-none hover:outline-violet-600
+
     w-fit text-lg px-6 py-2 flex items-center sm:text-xl
     {% if big %}  sm:px-12{% else%}sm:px-8{% endif %}
     {{extra_class}}"

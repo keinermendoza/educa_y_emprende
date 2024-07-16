@@ -4,17 +4,42 @@
         <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
         <c-fonts />
         <script src="{% static 'js/index.js' %}"></script>
+        <script>
+            
+            const breakpoints = {
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                    1280: {
+                        slidesPerView: 4,
+                    },
+                },
+            }
+            document.addEventListener("DOMContentLoaded", () => {
+                
+                const swiperElements = document.querySelectorAll('swiper-container');
+                console.log(swiperElements)
+                swiperElements.forEach((swip) => {
+                    Object.assign(swip, breakpoints);
+                })
+            })                
+                
+             
+          </script>
     </c-slot>
-
-    <c-layout.section id="demo container" >
-
-       
-       
-    </c-layout.section id="demo container" >
+    <c-sections.navbar />
 
 
+    <c-layout.section id="hero" extra_class="relative xl:pt-20  min-h-[min(750px,100vh)] overflow-hidden">
 
-    <c-layout.section id="hero" extra_class="relative  min-h-[min(750px,100vh)] overflow-hidden">
+        
         <!-- decoration for desktop -->
         <div class="hidden xl:block ">
             <svg class="absolute z-10 left-0 inset-y-0 h-full w-[60%]" width="1094" height="1000" viewBox="0 0 1094 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +86,9 @@
 
     </c-layout.section >
 
-    <c-layout.section id="general" extra_class="bg-[#F5F5F5]">
+    <c-layout.section id="general" extra_class="bg-[#F5F5F5] relative">
+        <c-triangles extra_class="bottom-0 right-6 w-[10vw] min-w-24" /> 
+
         <div class="flex flex-col sm:flex-row gap-10 justify-between items-center sm:items-start">
             <div class="pt-6">
                 <blockquote class="text-xl max-w-sm relative pt-8">
@@ -103,14 +130,14 @@
     </c-layout.section >
         
 
-    <c-layout.section id="search" extra_class="bg-[#F5F5F5]">
+    <c-layout.section id="desarrollo-personal" extra_class="bg-c-black">
         
-        <div class="text-center mb-4">
+        <div class="text-center mb-4  text-white">
             <h2 class="text-4xl mb-2">Desarrollo Personal</h2>
             <h3 class="text-2xl">Cursos Recientes</h3>
         </div>
 
-        <swiper-container class="w-full" autoplay="true" slides-per-view="4" space-between="20" grab-cursor="true" speed="8000" loop="true">
+        <swiper-container class="swipper-container w-full" autoplay="true" slides-per-view="1"  space-between="20" grab-cursor="true" speed="8000" loop="true">
 
             <swiper-slide  >
                <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
@@ -239,18 +266,17 @@
     </c-layout.section >
 
 
-    <c-layout.section id="servicios" extra_class="bg-c-black relative">
-        <c-triangles extra_class="top-0 left-0 w-[40vw] max-w-sm" /> 
-        <div class="flex flex-col gap-4">
-            
+    <c-layout.section id="crecimiento-profesional" extra_class="bg-[#F5F5F5]">
+        
+        <div class="text-center mb-4">
+            <h2 class="text-4xl mb-2">Crecimiento Profesional</h2>
+            <h3 class="text-2xl">Cursos Recientes</h3>
         </div>
-    </c-layout.section >
 
-    <c-layout.section id="cursos" extra_class="bg-[#F5F5F5] relative overflow-hidden">
-        <c-triangles extra_class="bottom-0 -right-2 w-[40vw] h-auto max-w-sm" /> 
+        <swiper-container class="w-full" autoplay="true" slides-per-view="1" space-between="20" grab-cursor="true" speed="8000" loop="true">
 
-        <div class="relative z-10 grid xs:grid-cols-2 lg:grid-cols-3 gap-4">
-            <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
                 <c-slot name="description">
                     Aprende esas habilidades que te hacen feliz.
                     Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
@@ -259,16 +285,119 @@
                     Musica | Canto | Guitarra
                 </c-slot>
             </c-curso_card >
-
-            <c-curso_card title="Crecimiento Profesional" href="core:home" img="core/images/oficina.jpg" >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
                 <c-slot name="description">
-                    Incorpora habilidades nuevas que te permitan crecer en tu puesto de trabajo,
-                    cambiar de área o incluso crear tu propio emprendimiento.
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
                 </c-slot>
                 <c-slot name="categories">
                     Musica | Canto | Guitarra
                 </c-slot>
             </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide><swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide><swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+            <swiper-slide  >
+               <c-curso_card title="Desarrollo Personal" href="core:home" img="core/images/jardin.jpg" >
+                <c-slot name="description">
+                    Aprende esas habilidades que te hacen feliz.
+                    Porque el mejor aprendizaje es ese que disfrutas adquiriendo. 
+                </c-slot>
+                <c-slot name="categories">
+                    Musica | Canto | Guitarra
+                </c-slot>
+            </c-curso_card >
+            </swiper-slide>
+        </swiper-container>
+
+        <div class="mt-12 grid place-content-center">
+            <c-secondary_link_button href="core:home">Ir a Desarrollo Personal</c-secondary_link_button>
         </div>
     </c-layout.section >
 

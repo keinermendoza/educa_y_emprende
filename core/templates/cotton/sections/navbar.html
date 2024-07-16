@@ -1,0 +1,73 @@
+{% load static %}
+<header class="w-full" x-data="{mobileOpen: false}">
+    <nav    
+        class="px-4 h-14 flex items-center justify-between md:justify-center fixed z-40 top-0 inset-x-0 mx-auto backdrop-blur bg-white bg-opacity-60">
+        <ul class="hidden md:flex justify-center gap-8 items-center">
+            <c-header_navlink href="core:home">
+                INICIO
+            </c-header_navlink>
+            <c-header_navlink href="core:home">
+                DESARROLLO PERSONAL
+            </c-header_navlink>
+            <c-header_navlink href="core:home">
+                CRECIMIENTO PROFESIONAL
+            </c-header_navlink>
+            <c-header_navlink href="core:home">
+                CURSOS
+            </c-header_navlink>
+        </ul>
+
+        <figure class="p-2 rounded-full bg-c-black opacity-50 w-12 h-12 md:hidden">
+            <img  loading="lazy" class="w-full h-full object-contain" src="{% static 'core/images/educa.png' %}" alt="Estudia con Nosotros">
+        </figure>
+
+        <div class="md:hidden">
+            <button
+            @click="mobileOpen = !mobileOpen" 
+            type="button" class="bg-secondary-gradient flex justify-center items-center w-9 h-9 text-sm font-semibold rounded-lg border text-white border-white
+            relative overflow-hidden after:content-[''] after:w-full after:h-full after:absolute after:top-0 after:left-0 after:opacity-0 after:bg-c-black
+            hover:after:opacity-40
+            "  
+            
+            aria-label="Toggle navigation">
+            
+            <svg
+                x-show="!mobileOpen" 
+                class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" x2="21" y1="6" y2="6" />
+                <line x1="3" x2="21" y1="12" y2="12" />
+                <line x1="3" x2="21" y1="18" y2="18" />
+            </svg>
+            <svg 
+                x-show="mobileOpen"
+                x-cloak
+                class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </svg>
+            </button>
+        </div>
+    </nav>  
+    <nav
+        class="fixed list-none	z-40 left-0 top-14 min-h-screen w-screen bg-c-black backdrop-blur bg-opacity-90" 
+        @click="mobileOpen = false"
+        x-show="mobileOpen"
+        x-cloak
+        >
+        <c-header_mobile_navlink href="{% url 'core:home' %}" >
+            INICIO
+        </c-header_mobile_navlink>
+
+        <c-header_mobile_navlink href="{% url 'core:home' %}" >
+            DESARROLLO PERSONAL
+        </c-header_mobile_navlink>
+
+        <c-header_mobile_navlink href="{% url 'core:home' %}" >
+            CRECIMIENTO PROFESIONAL
+        </c-header_mobile_navlink>
+
+        <c-header_mobile_navlink href="{% url 'core:home' %}" >
+            CURSOS
+        </c-header_mobile_navlink>
+    </nav>
+</header>
