@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Educa y Emprende | {{ title }}</title>
     <script defer src="{% static 'js/vendor.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    <c-fonts />
+
     {{ script }}
 </head>
 <body class="text-c-black">
+    <c-sections.navbar />
+
     {{ slot }}
+    <c-sections.footer />
+
 </body>
 </html>

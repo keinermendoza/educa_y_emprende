@@ -1,0 +1,11 @@
+<div class="text-2xl mt-10 mb-2">
+{% if cursos %}
+    {% if search %}
+    <p>{{ cursos|length }} Resultado{{cursos| length | pluralize}} para: <span class="font-lalezar">{{search}}</span></p>
+    {% else %}
+    <p>{{ cursos|length }} Resultado{{cursos| length | pluralize}} para su Busqueda</p>
+    {% endif %}
+{% else %}
+    <p>No conseguimos resultados para su busqueda</p>
+{% endif %}
+</div>

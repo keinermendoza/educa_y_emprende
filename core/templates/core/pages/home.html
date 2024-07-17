@@ -1,40 +1,8 @@
 {% load static %}
 <c-layout.base title="Inicio">
     <c-slot name="script">
-        <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
-        <c-fonts />
         <script src="{% static 'js/index.js' %}"></script>
-        <script>
-            
-            const breakpoints = {
-                breakpoints: {
-                    1: {
-                        slidesPerView: 1,
-                    },
-                    640: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                    },
-                    1280: {
-                        slidesPerView: 4,
-                    },
-                },
-            }
-            document.addEventListener("DOMContentLoaded", () => {
-                
-                const swiperElements = document.querySelectorAll('swiper-container');
-                console.log(swiperElements)
-                swiperElements.forEach((swip) => {
-                    Object.assign(swip, breakpoints);
-                })
-            })                
-                
-             
-          </script>
     </c-slot>
-    <c-sections.navbar />
 
 
     <c-layout.section id="hero" extra_class="relative xl:pt-20  min-h-[min(750px,100vh)] overflow-hidden">
@@ -77,7 +45,7 @@
                 Nos emociona compartir contigo nuestra selección de cursos y contribuir
                 con nuestro conocimiento al cumplimiento de tus metas.
             </p>
-            <c-primary_link_button hero extra_class="mx-auto sm:m-0" href="core:home">
+            <c-primary_link_button hero extra_class="mx-auto sm:m-0" href="{% url 'core:cursos' %}">
                 Ver Cursos
             </c-primary_link_button>
         </div>
@@ -402,7 +370,6 @@
     </c-layout.section >
 
     <c-sections.contacto />
-    <c-sections.footer />
 
 
    
