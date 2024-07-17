@@ -1,2 +1,5 @@
 rav:
   web: docker exec -it educa_y_emprende-web-1 bash
+  createsuperuser: docker exec -it educa_y_emprende-web-1 python manage.py createsuperuser
+  makemigrations: docker exec -it educa_y_emprende-web-1 python manage.py makemigrations
+  migrate: docker exec -it educa_y_emprende-web-1 python manage.py migrate

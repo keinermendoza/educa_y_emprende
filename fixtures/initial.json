@@ -1,0 +1,20 @@
+[
+    {
+      "model": "app.School",
+      "pk": 1,
+      "fields": {
+        "name": "John",
+        "location": "brooklyn",
+        "principal":"emma"
+      }
+    },
+    {
+      "model": "app.School",
+      "pk": 2,
+      "fields": {
+        "name": "Paul",
+        "location": "new york",
+        "principal":"stone"
+      }
+    }
+  ]
