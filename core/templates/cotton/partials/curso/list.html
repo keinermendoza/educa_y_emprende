@@ -1,5 +1,5 @@
 <div class="">
-    <c-cursos_count_resultados cursos search={{search}} />
+    <c-cursos_count_resultados cursos={{cursos}} search={{search}} />
     <div class="grid grid-cols-1 gap-2 xl:gap-4 mdl:grid-cols-2 xl:grid-cols-3">
         {% for curso in cursos %}
         <c-curso_card title={{curso.title}} href={{curso.get_absolute_url}} img={{curso.image.url}} >

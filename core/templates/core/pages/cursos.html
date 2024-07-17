@@ -38,7 +38,9 @@
             <main class=" to-blue-600">
                 <h4 class="text-center text-4xl mb-6">Bienvenido a Nuestro Panel de Busqueda</h4>
                 <c-search_bar />
-                {% include 'core/partials/cursos/list.html' %}
+                <c-partials.curso.list cursos={{cursos}} />
+                
+                {% comment %} {% include 'core/partials/cursos/list.html' with cursos=cursos %} {% endcomment %}
             </main>
         </div>
     </c-layout.section>

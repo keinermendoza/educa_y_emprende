@@ -1,5 +1,5 @@
 {% load static %}
-<c-layout.base title="<curso.title> ">
+<c-layout.base title="{{curso.title}}">
     <c-slot name="script">
     </c-slot>
 
@@ -8,7 +8,7 @@
         <div class="flex gap-2 xl:gap-4">
            
             <main class=" to-blue-600">
-                <h1 class=" text-4xl mb-4">Bienvenido a Nuestro Panel de Busqueda</h1>
+                <h1 class=" text-4xl mb-4">{{curso.title}}</h1>
                 <figure class="rounded-md w-full">
                     <img class="object-cover w-full h-full" src="{% static 'core/images/jardin.jpg' %}" alt="<curso.title>">
                 </figure>
@@ -18,8 +18,8 @@
             </main>
             <aside class="hidden xs:flex  rounded-md  flex-col text-lg xl:text-xl  w-full max-w-56 xl:max-w-72">
                 <div class="sticky rounded-md shadow-lg flex flex-col gap-2">
-                    <p class="font-lalezar">Nombre del Curso</p>
-                    <p class="font-lalezar">Precio del Curso </p>
+                    <p class="font-lalezar">{{curso.title}}</p>
+                    <p class="font-lalezar">{{curso.price}} </p>
                 </div>
             
             </aside>

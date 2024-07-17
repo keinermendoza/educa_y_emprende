@@ -3,3 +3,7 @@ rav:
   createsuperuser: docker exec -it educa_y_emprende-web-1 python manage.py createsuperuser
   makemigrations: docker exec -it educa_y_emprende-web-1 python manage.py makemigrations
   migrate: docker exec -it educa_y_emprende-web-1 python manage.py migrate
+  seeder: docker exec -it educa_y_emprende-web-1 python manage.py seeder
+  flush: docker exec -it educa_y_emprende-web-1 python manage.py flush
+
+

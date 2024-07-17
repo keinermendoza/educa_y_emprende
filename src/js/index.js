@@ -20,7 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
             1280: {
                 slidesPerView: 4,
             },
-        },
+        }, injectStyles: [
+            `
+            :host  {
+                display: grid;
+            }
+            @media(max-width: 640px) {
+                :host {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+            `,
+          ],
+      
     }
         
     const swiperElements = document.querySelectorAll('swiper-container');

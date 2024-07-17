@@ -1,13 +1,15 @@
 {% load static %}
-<article class="bg-white overflow-hidden shadow-xl rounded-lg flex flex-col">
+<article class="bg-white h-full overflow-hidden shadow-xl rounded-lg flex flex-col">
     <!-- image -->
-    <figure class="h-56 w-full">
-        <img class="transition-transform duration-300 hover:scale-110 object-cover h-full w-full" src="{% static img %}" alt="curso {{title}}">
+    <figure class="h-56 w-full bg-gray-500">
+        {% if img %}
+        <img class="transition-transform duration-300 hover:scale-110 object-cover h-full w-full" src="{{img}}" alt="curso {{title}}">
+        {% endif %}
     </figure> 
     
-    <div class="flex-grow flex flex-col gap-3 md:gap-4 p-4">
+    <div class="flex-1 flex flex-col gap-3 md:gap-4 p-4">
         <h4 class="font-medium text-xl sm:text-[1.65rem]">{{title}}</h4>
-        <p class="flex-grow leading-tight text-base sm:text-lg">{{description}}</p>
+        <p class="flex-grow leading-tight text-base">{{summary}}</p>
         <p class="leading-tight text-base sm:text-lg">{{categories}}</p>
         <c-primary_link_button href="{{href}}" extra_class="ml-auto" >Ver Más</c-link_button>
     </div>

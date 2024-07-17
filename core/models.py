@@ -1,18 +1,10 @@
+from django.urls import reverse
 from django.db import models
 from django.core.exceptions import ValidationError
+from django_extensions.db.fields import AutoSlugField
 
 class Category(models.Model):
     name = models.CharField('Nombre', max_length=150)
-    parent = models.ForeignKey('self', verbose_name='Categoría Principal', on_delete=models.CASCADE, related_name='subcategories', null=True, blank=True)
-
-
-    def clean(self):
-        if self.parent and self.parent.parent:
-            raise ValidationError("No se puede anidar más de un nivel.")
-    
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -21,6 +13,16 @@ class Category(models.Model):
         verbose_name = "Categoría"
         verbose_name_plural = "Categorías"
 
+class SubCategory(models.Model):
+    name = models.CharField('Nombre', max_length=150)
+    parent = models.ForeignKey(Category, verbose_name='Categoría Principal', on_delete=models.CASCADE, related_name='subcategories', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Sub Categoría"
+        verbose_name_plural = "Sub Categorías"
 
 
 class Curso(models.Model):
@@ -29,14 +31,38 @@ class Curso(models.Model):
         PROFESIONAL = ('pro', 'Crecimiento Profesional')
 
     title = models.CharField('Nombre', max_length=150)
+    slug = AutoSlugField(populate_from=['title'])
+
     price = models.DecimalField('Precio', max_digits=10, decimal_places=2, blank=True, null=True)
     image = models.ImageField('Imagen Principal', null=True, blank=True)
     link = models.URLField('Link de Compra',  max_length=300, null=True, blank=True)
     is_public = models.BooleanField('Es Publico', default=False, help_text="Marca para que todos puedan ver este curso")
     brand = models.CharField('Motivación', max_length=3, choices=Brands.choices, default=Brands.PERSONAL)
+    summary = models.CharField('Resumen', max_length=152, blank=True, null=True)
     description = models.JSONField('Descripción', blank=True, null=True)
-    # category = models.ForeignKey()
+    categories = models.ManyToManyField(Category, verbose_name='Categoría', related_name='cursos')
+    sub_categories = models.ManyToManyField(SubCategory, verbose_name='Sub Categoría', related_name='cursos')
+
+    created = models.DateTimeField('Fecha de Creación', auto_now_add=True)
+    updated = models.DateTimeField('Última Actualización',auto_now=True)
+
+
+    def get_absolute_url(self):
+        return reverse("core:curso_detail", args=[self.slug])
+    
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['-created'])
+        ]
+        ordering = ["-created"]
+
+
     
