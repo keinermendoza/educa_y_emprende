@@ -4,7 +4,7 @@ import ReactDOM  from 'react-dom/client'
 // import App from './App'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Cursos from './routes/Cursos';
-import { CursosLoader } from './routes/Cursos';
+// import { CursosLoader } from './routes/Cursos';
 
 const Outro = () => {
   return (
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/cursos",
     element: <Cursos />,
-    loader: CursosLoader,
+    // loader: CursosLoader,
     }
 ]);
 

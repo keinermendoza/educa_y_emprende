@@ -1,25 +1,27 @@
 import React from 'react'
 
-export default function FilterAside() {
+export default function FilterAside({handleSearch, brands}) {
   return (
     <div className="flex flex-col gap-6">
     <div className="flex flex-col gap-2">
         <h3 className="font-lalezar">Motivación</h3>
 
         <div>
-            <label className="flex gap-2 items-center"
-            >
+            <label className="flex gap-2 items-center">
                 <input
-                    name="brand_name" value="per" x-ref="per" type="checkbox"/>
+                    onChange={handleSearch}
+                    checked={brands.includes('per')}
+                    name="brand__name" value="per" type="checkbox"/>
                 <span>Desarrollo Personal</span>
             </label>
         </div>
         <div>
-            <label className="flex gap-2 items-center" 
-            >
+            <label className="flex gap-2 items-center" >
                     
             <input
-                name="brand_name" value="pro" type="checkbox"/>
+                onChange={handleSearch}
+                checked={brands.includes('pro')}
+                name="brand__name" value="pro" type="checkbox"/>
                <span>Crecimiento Profesional</span> 
             </label>
         </div>

@@ -3,16 +3,16 @@
     <nav    
         class="px-4 h-14 flex items-center justify-between md:justify-center fixed z-40 top-0 inset-x-0 mx-auto backdrop-blur bg-white bg-opacity-60">
         <ul class="hidden md:flex justify-center gap-8 items-center">
-            <c-header_navlink href="core:home">
+            <c-header_navlink href="{% url 'core:home' %}">
                 INICIO
             </c-header_navlink>
-            <c-header_navlink href="core:home">
+            <c-header_navlink href="{% url 'core:cursos' %}?brand=per">
                 DESARROLLO PERSONAL
             </c-header_navlink>
-            <c-header_navlink href="core:home">
+            <c-header_navlink href="{% url 'core:cursos' %}?brand=pro">
                 CRECIMIENTO PROFESIONAL
             </c-header_navlink>
-            <c-header_navlink href="core:cursos">
+            <c-header_navlink href="{% url 'core:cursos' %}?brand=per&brand=pro">
                 CURSOS
             </c-header_navlink>
         </ul>
