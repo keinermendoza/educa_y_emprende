@@ -1,9 +1,9 @@
-<div class="">
-    <c-cursos_count_resultados cursos={{cursos}} search={{search}} />
+<div id="partial-curso-list" class="">
+    <c-cursos_count_resultados count={{paginator.count}} search={{search}} />
     <div class="grid grid-cols-1 gap-2 xl:gap-4 mdl:grid-cols-2 xl:grid-cols-3">
-        {% for curso in cursos %}
-        <c-curso_card title={{curso.title}} href={{curso.get_absolute_url}} img={{curso.image.url}} >
-            <c-slot name="preview">{{curso.preview}}</c-slot>
+        {% for curso in object_list %}
+        <c-curso_card title={{curso.title}} href={{curso.get_absolute_url}} img={{curso.image}} >
+            <c-slot name="summary">{{curso.summary}}</c-slot>
             <c-slot name="categories">
                 {% for sub_cateogry in curso.sub_categories.all %}
                 <span>{{sub_cateogry}}{% if not forloop.last %} | {% endif %}</span>

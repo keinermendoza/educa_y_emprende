@@ -1,13 +1,16 @@
+{% load static %}
 <c-layout.base title="Cursos">
     <c-slot name="script">
+        <script defer src="{% static 'js/cursos.js' %}"></script>
     </c-slot>
 
-    <div x-data="{filterMobileOpen:false, categories:''}">
+    {% comment %} <div x-data="{filterMobileOpen:false, categories:''}"> {% endcomment %}
 
-    <c-layout.section id="cursos" extra_class="pt-16 xl:pt-20 relative">
+    <c-layout.section  id="cursos" extra_class="pt-16 xl:pt-20 relative">
 
+        <div id="cursos-root"></div>
         <!-- filter mobile section -->        
-        <div @click="filterMobileOpen = true" 
+        {% comment %} <div @click="filterMobileOpen = true" 
             class="block xs:hidden fixed z-30 text-white w-12 h-12 top-20 left-0 p-2 rounded-e-full bg-secondary-gradient
             transition-transform
             before:-translate-x-8 before:top-0 before:left-0 before:bg-secondary-gradient before:absolute  before:w-12  before:h-12
@@ -28,25 +31,21 @@
         </div>
         <!-- end  -->        
 
-
         <div class="flex gap-2 xl:gap-4">
-
             <aside class="hidden xs:flex  rounded-md  flex-col text-lg xl:text-xl p-4 w-full max-w-56 xl:max-w-72">
                 <c-cursos_filter_sidebar />
-            
             </aside>
             <main class=" to-blue-600">
                 <h4 class="text-center text-4xl mb-6">Bienvenido a Nuestro Panel de Busqueda</h4>
-                <c-search_bar />
-                <c-partials.curso.list cursos={{cursos}} />
-                
-                {% comment %} {% include 'core/partials/cursos/list.html' with cursos=cursos %} {% endcomment %}
+                <c-search_bar/>
+                <c-partials.curso.list  cursos=cursos />
             </main>
-        </div>
+        </div> {% endcomment %}
+
     </c-layout.section>
 
     <c-sections.contacto />
 
-    </div>
+    {% comment %} </div> {% endcomment %}
 
 </c-layout.base>

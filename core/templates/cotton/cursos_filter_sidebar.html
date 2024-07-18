@@ -2,13 +2,24 @@
     <div class="flex flex-col gap-2">
         <h3 class="font-lalezar">Motivación</h3>
 
-        <div class="flex  gap-2 items-center">
-            <input id="crecimiento-personal" name="crecimiento-personal" type="checkbox">
-            <label for="crecimiento-personal">Crecimiento Personal</label>
+        <div>
+            <label class="flex gap-2 items-center"
+            >
+                <input
+                @click="$dispatch('execute-curso-filter')"
+                    name="brand_name" value="per" x-ref="per" type="checkbox">
+                <span>Desarrollo Personal</span>
+            </label>
         </div>
         <div>
-            <input id="desarrollo-profesional" name="desarrollo-profesional" type="checkbox">
-            <label for="desarrollo-profesional">Crecimiento Personal</label>
+            <label class="flex gap-2 items-center" 
+            >
+                    
+            <input
+                @click="$dispatch('execute-curso-filter')"
+                name="brand_name" value="pro" type="checkbox">
+               <span>Crecimiento Profesional</span> 
+            </label>
         </div>
     </div>
 

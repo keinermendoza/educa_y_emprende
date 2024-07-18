@@ -112,7 +112,7 @@
             {% for curso in cursos_personales %}
             <swiper-slide  >
 
-                    <c-curso_card title={{curso.title}} href={{curso.get_absolute_url}} img="{{curso.img.url}}" >
+                    <c-curso_card title={{curso.title}} href={{curso.get_absolute_url}} img="{{curso.image}}" >
                         <c-slot name="summary">
                             {{curso.summary}}
                         </c-slot>
@@ -142,7 +142,7 @@
         <swiper-container class="w-full" autoplay="true" slides-per-view="1" space-between="20" grab-cursor="true" speed="8000" loop="true">
             {% for curso in cursos_profesionales %}
             <swiper-slide  >
-                <c-curso_card title={{curso.title}} href="{{curso.get_absolute_url}}" img="{{curso.img.url}}" >
+                <c-curso_card title={{curso.title}} href="{{curso.get_absolute_url}}" img="{{curso.image}}" >
                     <c-slot name="summary">{{curso.summary}}</c-slot>
                     <c-slot name="categories">
                         {% for sub_cateogry in curso.sub_categories.all %}

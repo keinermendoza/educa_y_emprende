@@ -11,6 +11,8 @@ from .models import (
     SubCategory
 )
 
+from .filters import CursoFilter
+
 class HomeView(TemplateView):
     template_name = "core/pages/home.html"
 
@@ -29,10 +31,28 @@ class CursosView(ListView):
     context_object_name = 'cursos'
     paginate_by = 6
 
+    # custom atributes
+    filter_class = CursoFilter
+    partial_template_name = 'cotton/partials/curso/list.html'
+
+    def get_template_names(self) -> list[str]:
+        if self.request.htmx:
+            return [self.partial_template_name]
+        return super().get_template_names()
+
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         print(context)
         return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return self.filter_queryset(queryset)
+    
+    def filter_queryset(self, queryset):
+        filter = self.filter_class(self.request.GET, queryset)
+        return filter.qs
+
 
 
 class CursoDetailView(DetailView):

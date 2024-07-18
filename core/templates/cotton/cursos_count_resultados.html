@@ -1,9 +1,9 @@
 <div class="text-2xl mt-10 mb-2">
-{% if cursos %}
+{% if count %}
     {% if search %}
-    <p>{{ cursos|length }} Resultado{{cursos| length | pluralize}} para: <span class="font-lalezar">{{search}}</span></p>
+    <p>{{ count}} Resultado{{count | pluralize}} para: <span class="font-lalezar">{{search}}</span></p>
     {% else %}
-    <p>{{ cursos|length }} Resultado{{cursos| length | pluralize}} para su Busqueda</p>
+    <p>{{ count }} Resultado{{count | pluralize}} para su Busqueda</p>
     {% endif %}
 {% else %}
     <p>No conseguimos resultados para su busqueda</p>
