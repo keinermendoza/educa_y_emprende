@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from django_filters import rest_framework as filters
@@ -26,14 +28,13 @@ class CursosListAPIView(ListAPIView):
 
     
 
-class CategoriesListAPIView(ListAPIView):
+class CategoriesListAPIView(APIView):
     permission_classes = [AllowAny]
-    serializer_class = CategorySerializer
-    pagination_class = None
 
-    def get_queryset(self):
+    def get(self, request, *args, **kwargs):
         queryset = Category.objects.all()
-        brand = self.request.query_params.get('brand', None)
+        brand = self.request.query_params.getlist('brand', None)
         if brand:
-            queryset = queryset.filter(cursos__brand=brand).distinct()
-        return queryset
+            queryset = queryset.filter(cursos__brand__in=brand).distinct()
+        return Response(queryset.values_list('name', flat=True))
+        

@@ -20,7 +20,7 @@ export default function CursoCard({title, summary, categories, sub_categories, h
                 <span
                 className="font-semibold" 
                 key={index}
-                >{category.name} {index+1 === lastCategory ? ':' : '|'}</span>))}
+                >{category} {index+1 === lastCategory ? ':' : '|'}</span>))}
 
                 {sub_categories?.map((sub_category, index) => (
                   <span 

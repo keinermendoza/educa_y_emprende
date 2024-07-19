@@ -13,6 +13,13 @@ class CategoryFilter(filters.FilterSet):
 class CursoFilter(filters.FilterSet):
     title = filters.CharFilter(lookup_expr='icontains')
     brand = filters.MultipleChoiceFilter(choices=Curso.Brands.choices)
+    categories = filters.ModelMultipleChoiceFilter(
+        queryset=Category.objects.all(),
+        field_name='categories__name',
+        to_field_name='name'
+    )
+    # categories = filters.MultipleChoiceFilter(field_name='categories__name')
+
     class Meta:
         model = Curso
-        fields = ['title', 'brand']
+        fields = ['title', 'brand', 'categories']
