@@ -1,18 +1,22 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView 
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from django_filters import rest_framework as filters
 from rest_framework.pagination import PageNumberPagination
 
 from core.models import (
-    Curso
+    Curso,
+    Category
 )
 from .serializers import (
-    CursoSerializer
+    CursoSerializer,
+    CategorySerializer
 )
 from .filters import (
-    CursoFilter
+    CursoFilter,
+    CategoryFilter
 )
+
 class CursosListAPIView(ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = CursoSerializer
@@ -20,6 +24,16 @@ class CursosListAPIView(ListAPIView):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CursoFilter
 
-    def get_queryset(self):
-        return super().get_queryset()
     
+
+class CategoriesListAPIView(ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = CategorySerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        queryset = Category.objects.all()
+        brand = self.request.query_params.get('brand', None)
+        if brand:
+            queryset = queryset.filter(cursos__brand=brand).distinct()
+        return queryset
