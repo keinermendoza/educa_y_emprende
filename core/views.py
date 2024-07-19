@@ -8,7 +8,7 @@ from django.views.generic import (
 from .models import (
     Curso,
     Category,
-    SubCategory
+    # SubCategory
 )
 
 # from ..api.filters import CursoFilter

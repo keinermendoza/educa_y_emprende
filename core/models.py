@@ -13,16 +13,15 @@ class Category(models.Model):
         verbose_name = "Categoría"
         verbose_name_plural = "Categorías"
 
-class SubCategory(models.Model):
+class Topic(models.Model):
     name = models.CharField('Nombre', max_length=150)
-    parent = models.ForeignKey(Category, verbose_name='Categoría Principal', on_delete=models.CASCADE, related_name='subcategories', null=True, blank=True)
 
     def __str__(self):
         return self.name
     
     class Meta:
-        verbose_name = "Sub Categoría"
-        verbose_name_plural = "Sub Categorías"
+        verbose_name = "Tema"
+        verbose_name_plural = "Temas"
 
 
 class Curso(models.Model):
@@ -41,7 +40,7 @@ class Curso(models.Model):
     summary = models.CharField('Resumen', max_length=152, blank=True, null=True)
     description = models.JSONField('Descripción', blank=True, null=True)
     categories = models.ManyToManyField(Category, verbose_name='Categoría', related_name='cursos')
-    sub_categories = models.ManyToManyField(SubCategory, verbose_name='Sub Categoría', related_name='cursos')
+    topics = models.ManyToManyField(Topic, verbose_name='Temas', related_name='cursos')
 
     created = models.DateTimeField('Fecha de Creación', auto_now_add=True)
     updated = models.DateTimeField('Última Actualización',auto_now=True)

@@ -51,7 +51,7 @@ export default function FilterAside({handleSearch, brands, categories, categorie
     
 
         <div className="flex flex-col gap-2">
-            <h3 className="font-lalezar">Subcategoría</h3>
+            <h3 className="font-lalezar">Temas</h3>
         
             <div className="flex  gap-2 items-center">
                 <input id="guitarra" name="guitarra" type="checkbox"/>

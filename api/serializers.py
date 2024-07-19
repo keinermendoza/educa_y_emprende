@@ -2,13 +2,13 @@ from rest_framework import serializers
 from core.models import (
     Curso,
     Category,
-    SubCategory
+    # SubCategory
 )
 
-class SubCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubCategory
-        fields = ['name']
+# class SubCategorySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = SubCategory
+#         fields = ['name']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
