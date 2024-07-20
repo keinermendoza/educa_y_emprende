@@ -13,9 +13,9 @@ export default function CursoList({cursos, count, search}) {
                 title={curso.title}
                 summary={curso.summary}
                 categories={curso.categories}
-                sub_categories={curso.sub_categories}
                 href={curso.href}
                 image={curso.image}
+                topics={curso.topics}
                 />
             
             ))}

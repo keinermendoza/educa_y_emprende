@@ -1,10 +1,9 @@
 import React from 'react'
 import PrimaryButton from './PrimaryButton'
 
-export default function CursoCard({title, summary, categories, sub_categories, href, image}) {
+export default function CursoCard({title, summary, categories, href, image, topics}) {
   const lastCategory = categories?.length
-  const lastSubCategory = sub_categories?.length
-  console.log(lastCategory)
+  const lastTopic = topics?.length
   return (
     <article className="bg-white h-full overflow-hidden shadow-xl rounded-lg flex flex-col">
         <figure className="h-56 w-full bg-gray-500">
@@ -20,12 +19,12 @@ export default function CursoCard({title, summary, categories, sub_categories, h
                 <span
                 className="font-semibold" 
                 key={index}
-                >{category} {index+1 === lastCategory ? ':' : '|'}</span>))}
+                >{category} {index+1 === lastCategory ? ':' : '&'} </span>))}
 
-                {sub_categories?.map((sub_category, index) => (
+                {topics?.map((topic, index) => (
                   <span 
                   key={index}
-                  > {sub_category.name} {index+1 !== lastSubCategory && '|'}</span>
+                  > {topic} {index+1 !== lastTopic && '|'}</span>
                 ))}
               </>
 

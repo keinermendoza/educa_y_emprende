@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function FilterAside({handleSearch, brands, categories, categoriesSelected, handleCategorySelect}) {
+export default function FilterAside({handleSearch, brands, brandsSelected, categories, categoriesSelected, handleCategorySelect, topics ,topicsSelected, handleTopicSelect}) {
+
   return (
     <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
@@ -10,7 +11,7 @@ export default function FilterAside({handleSearch, brands, categories, categorie
                 <label className="flex gap-2 items-center">
                     <input
                         onChange={handleSearch}
-                        checked={brands.includes('per')}
+                        checked={brandsSelected.includes('per')}
                         name="brand__name" value="per" type="checkbox"/>
                     <span>Desarrollo Personal</span>
                 </label>
@@ -20,7 +21,7 @@ export default function FilterAside({handleSearch, brands, categories, categorie
                         
                 <input
                     onChange={handleSearch}
-                    checked={brands.includes('pro')}
+                    checked={brandsSelected.includes('pro')}
                     name="brand__name" value="pro" type="checkbox"/>
                 <span>Crecimiento Profesional</span> 
                 </label>
@@ -53,18 +54,21 @@ export default function FilterAside({handleSearch, brands, categories, categorie
         <div className="flex flex-col gap-2">
             <h3 className="font-lalezar">Temas</h3>
         
-            <div className="flex  gap-2 items-center">
-                <input id="guitarra" name="guitarra" type="checkbox"/>
-                <label for="guitarra">Guitarra</label>
+            {topics?.map(topic => (
+
+            <div key={topic}>
+                <label className="flex gap-2 items-center" >
+                        
+                <input
+                    value={topic}
+                    onChange={handleTopicSelect}
+                    checked={topicsSelected.includes(topic)}
+                    name="topics" type="checkbox" />
+                <span>{topic}</span> 
+                </label>
             </div>
-            <div>
-                <input id="germinado-de-plantas" name="germinado-de-plantas" type="checkbox"/>
-                <label for="germinado-de-plantas">Germinado de Plantas</label>
-            </div>
-            <div>
-                <input id="muebles-de-roble" name="muebles-de-roble" type="checkbox"/>
-                <label for="muebles-de-roble">Muebles de Roble</label>
-            </div>
+
+            ))}
         </div>
         
     </div>

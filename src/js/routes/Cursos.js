@@ -15,13 +15,19 @@ export default function Cursos() {
   const initialBrands = searchParams.getAll('brand') || [];
   const initialTitle = searchParams.get('title') || '';
 
-  const [brands, setBrands] = useState(initialBrands);
-  const [title, setTitle] = useState(initialTitle);
+  const [brands, setBrands] = useState([]);
+  const [title, setTitle] = useState(searchParams.get('title') || '');
   const [cursos, setCursos] = useState(null);
+  const [topics, setTopics] = useState(null);
+
   const [count, setCount] = useState(null)
   const [categories, setCategories] = useState([])
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
+
+  const [brandsSelected, setBrandsSelected] = useState(searchParams.getAll('brand') || [])
+  const [topicsSelected, setTopicsSelected] = useState(searchParams.getAll('topics') || [])
+
 
   const [categoriesSelected, setCategoriesSelected] = useState(searchParams.getAll('categories') || [])
 
@@ -34,28 +40,58 @@ export default function Cursos() {
 
   }
 
-  const updateCategories = async () => {
-    const params = new URLSearchParams();
-    brands.forEach(brand => params.append('brand', brand));
-    const response =  await axiosInstance.get("filter/categories" + "?" + params.toString());
-    setCategories(response.data)
-    return response.data
+  const handleTopicSelect = (e) => {
+    const value = e.target.value;
+    setTopicsSelected(prev =>
+      prev.includes(value)
+        ? prev.filter(cat => cat !== value)
+        : [...prev, value])
+
   }
+
+
+
+
+  const updateSearchParams = () => {
+    const params = new URLSearchParams();
+    brandsSelected.forEach(brand => params.append('brand', brand));
+    categoriesSelected.forEach(brand => params.append('categories', brand));
+    topicsSelected.forEach(topic => params.append('topics', topic));
+
+    if (title) params.append('title', title);
+
+    setSearchParams(params)
+
+  }
+
+  useEffect(() => {
+    updateSearchParams()
+  },[title, categoriesSelected, brandsSelected, topicsSelected])
+  // const updateCategories = async () => {
+  //   const params = new URLSearchParams();
+  //   brands.forEach(brand => params.append('brand', brand));
+  //   const response =  await axiosInstance.get("filter/categories" + "?" + params.toString());
+  //   setCategories(response.data)
+  //   return response.data
+  // }
 
   
 
   useEffect(() => {
     // Actualizar los parámetros de búsqueda en la URL
     // updateCategories()
-    const getCursos = async (params) => {
+    const getCursos = async () => {
       try {
         // setLoading(true);
-        const response = await axiosInstance.get("filter/cursos" + "?" + params.toString());
+        const response = await axiosInstance.get("filter/cursos" + "?" + searchParams.toString());
         // if (!response.ok) {
         //   throw new Error('Error en la solicitud');
         // }
+        setBrands(response.data.extra.categories)
         setCursos(response.data.results);
         setCount(response.data.count)
+        setCategories(response.data.extra.categories)
+        setTopics(response.data.extra.topics)
       } catch (error) {
         console.error(error)
         // setError(error.message);
@@ -65,41 +101,22 @@ export default function Cursos() {
       // }
     };
 
-    const updateParams = async () => {
-      const params = new URLSearchParams();
-      brands.forEach(brand => params.append('brand', brand));
-
-      if (title) params.append('title', title);
-
-      const new_categories = await updateCategories()
-      if (categoriesSelected) {
-        categoriesSelected.forEach((cat) => {
-        if( new_categories.includes(cat)) {
-          params.append('categories', cat)
-        }
-      } 
-    )}
-
-    getCursos(params)
-    setSearchParams(params);
-    }
-
-
-    // Realizar la solicitud GET
-    
-    updateParams()
+    console.log(searchParams.toString())
+    getCursos()
     
   }, 
-  [title, brands, categoriesSelected]);
+  [searchParams]);
 
   const handleBrandsChange = (e) => {
     const value = e.target.value;
-    setBrands(prevBrands =>
+    setBrandsSelected(prevBrands =>
       prevBrands.includes(value)
         ? prevBrands.filter(brand => brand !== value)
         : [...prevBrands, value]
     );
   };
+
+  
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -133,9 +150,15 @@ export default function Cursos() {
   <FilterAside
   brands={brands}
   handleSearch={handleBrandsChange}
+  brandsSelected={brandsSelected}
+
   categories={categories}
   handleCategorySelect={handleCategorySelect}
   categoriesSelected={categoriesSelected}
+
+  topics={topics}
+  handleTopicSelect={handleTopicSelect}
+  topicsSelected={topicsSelected}
    />
   </div>
 
@@ -144,10 +167,16 @@ export default function Cursos() {
           <FilterAside 
           brands={brands}
           handleSearch={handleBrandsChange}
+          brandsSelected={brandsSelected}
+
+
           categories={categories}
           handleCategorySelect={handleCategorySelect}
           categoriesSelected={categoriesSelected}
 
+          topics={topics}
+          handleTopicSelect={handleTopicSelect}
+          topicsSelected={topicsSelected}
           />
         </aside>
         <main class=" to-blue-600">

@@ -1,8 +1,18 @@
 from django_filters import rest_framework as filters
 from core.models import (
     Curso,
-    Category
+    Category,
+    Topic
 )
+
+class TopicFilter(filters.FilterSet):
+    brand = filters.MultipleChoiceFilter(field_name='cursos__brand')
+    categories = filters.MultipleChoiceFilter(field_name='cursos__categories')
+
+    class Meta:
+        model = Topic
+        fields = ['brand', 'categories']
+
 
 class CategoryFilter(filters.FilterSet):
     brand = filters.CharFilter(field_name='cursos__brand')
@@ -18,8 +28,13 @@ class CursoFilter(filters.FilterSet):
         field_name='categories__name',
         to_field_name='name'
     )
+    topics = filters.ModelChoiceFilter(
+        queryset=Topic.objects.all(),
+        field_name='topics__name',
+        to_field_name='name'
+    )
     # categories = filters.MultipleChoiceFilter(field_name='categories__name')
 
     class Meta:
         model = Curso
-        fields = ['title', 'brand', 'categories']
+        fields = ['title', 'brand', 'categories', 'topics']
