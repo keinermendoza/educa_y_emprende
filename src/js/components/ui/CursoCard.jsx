@@ -31,7 +31,7 @@ export default function CursoCard({title, summary, categories, href, image, topi
             </p>
             <PrimaryButton 
                 href={href}
-                extra_class="ml-auto"
+                extra_class="ml-auto cursor-pointer"
             >Ver Más</PrimaryButton>
         </div>
         

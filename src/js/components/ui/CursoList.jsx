@@ -1,8 +1,9 @@
 import React from 'react'
 import CursoCard from './CursoCard'
 import CountResults from './CountResults'
+import CursoPagination from './CursoPagination'
 
-export default function CursoList({cursos, count, search}) {
+export default function CursoList({cursos, count, search, handleChangePage, nextPage, prevPage}) {
   return (
     <div id="partial-curso-list" class="">
         <CountResults count={count} search={search}  />
@@ -20,6 +21,12 @@ export default function CursoList({cursos, count, search}) {
             
             ))}
     </div>
+    <CursoPagination 
+    handleChangePage={handleChangePage}
+    nextPage={nextPage} 
+    prevPage={prevPage}
+
+    />
 </div>
 
   )

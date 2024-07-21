@@ -13,7 +13,15 @@ import axios from 'axios';
     withCredentials: true, // Esto asegura que se envíen las cookies con cada solicitud
     xsrfCookieName: 'csrftoken',
     xsrfHeaderName: "X-CSRFTOKEN"
-
 });
 
-export default axiosInstance;
+
+
+const clientAxios = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api/', // Ajusta esto según tu configuración
+    withCredentials: true, // Esto asegura que se envíen las cookies con cada solicitud
+    xsrfCookieName: 'csrftoken',
+    xsrfHeaderName: "X-CSRFTOKEN"
+});
+
+export {axiosInstance, clientAxios};

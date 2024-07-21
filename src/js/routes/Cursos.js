@@ -1,5 +1,5 @@
 import React from 'react'
-import axiosInstance from '../services/axios';
+import {clientAxios} from '../services/axios';
 import FilterAside from '../components/ui/FilterAside';
 import CursoList from '../components/ui/CursoList';
 import SearchBar from '../components/ui/SearchBar';
@@ -11,9 +11,11 @@ export default function Cursos() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   
-  // Inicialización de los estados con valores de parámetros de búsqueda
-  const initialBrands = searchParams.getAll('brand') || [];
-  const initialTitle = searchParams.get('title') || '';
+  const [endpoint, setEndpoint] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [prevPage, setPrevPage] = useState(null);
+
+
 
   const [brands, setBrands] = useState([]);
   const [title, setTitle] = useState(searchParams.get('title') || '');
@@ -22,6 +24,10 @@ export default function Cursos() {
 
   const [count, setCount] = useState(null)
   const [categories, setCategories] = useState([])
+
+  const initialLoad = useRef(true)
+  const isFiltering = useRef(true)
+
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
 
@@ -54,19 +60,20 @@ export default function Cursos() {
 
   const updateSearchParams = () => {
     const params = new URLSearchParams();
-    brandsSelected.forEach(brand => params.append('brand', brand));
-    categoriesSelected.forEach(brand => params.append('categories', brand));
-    topicsSelected.forEach(topic => params.append('topics', topic));
-
-    if (title) params.append('title', title);
-
+    if (isFiltering.current) {
+      brandsSelected.forEach(brand => params.append('brand', brand));
+      categoriesSelected.forEach(brand => params.append('categories', brand));
+      topicsSelected.forEach(topic => params.append('topics', topic));
+      if (title) params.append('title', title);
     setSearchParams(params)
-
+    } else {
+    setSearchParams(endpoint)
+    }
   }
 
   useEffect(() => {
     updateSearchParams()
-  },[title, categoriesSelected, brandsSelected, topicsSelected])
+  },[title, categoriesSelected, brandsSelected, topicsSelected, endpoint])
   // const updateCategories = async () => {
   //   const params = new URLSearchParams();
   //   brands.forEach(brand => params.append('brand', brand));
@@ -83,15 +90,27 @@ export default function Cursos() {
     const getCursos = async () => {
       try {
         // setLoading(true);
-        const response = await axiosInstance.get("filter/cursos" + "?" + searchParams.toString());
+        const completeEndpoint = isFiltering.current ? "filter/cursos" + "?" + searchParams.toString() : endpoint;  
+        
+        const response = await clientAxios.get(completeEndpoint);
+      
         // if (!response.ok) {
         //   throw new Error('Error en la solicitud');
         // }
-        setBrands(response.data.extra.categories)
+        if (initialLoad.current) {
+          setBrands(response.data.extra.categories)
+          setCategories(response.data.extra.categories)
+          setTopics(response.data.extra.topics)
+        }
+        initialLoad.current = false
+        
         setCursos(response.data.results);
         setCount(response.data.count)
-        setCategories(response.data.extra.categories)
-        setTopics(response.data.extra.topics)
+
+        setNextPage(response.data.next)
+        setPrevPage(response.data.previous)
+
+        
       } catch (error) {
         console.error(error)
         // setError(error.message);
@@ -103,9 +122,10 @@ export default function Cursos() {
 
     console.log(searchParams.toString())
     getCursos()
+    isFiltering.current = true
     
   }, 
-  [searchParams]);
+  [searchParams, endpoint]);
 
   const handleBrandsChange = (e) => {
     const value = e.target.value;
@@ -116,7 +136,10 @@ export default function Cursos() {
     );
   };
 
-  
+  const handleChangePage = (page) => {
+    isFiltering.current = false
+    setEndpoint(page)
+  }
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -186,7 +209,10 @@ export default function Cursos() {
               count={count}
               cursos={cursos}
               search={title}
-              
+
+              handleChangePage={handleChangePage}
+              nextPage={nextPage}
+              prevPage={prevPage}
             />
         </main>
     </div>

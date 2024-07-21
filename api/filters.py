@@ -28,7 +28,7 @@ class CursoFilter(filters.FilterSet):
         field_name='categories__name',
         to_field_name='name'
     )
-    topics = filters.ModelChoiceFilter(
+    topics = filters.ModelMultipleChoiceFilter(
         queryset=Topic.objects.all(),
         field_name='topics__name',
         to_field_name='name'

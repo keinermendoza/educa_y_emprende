@@ -28,11 +28,15 @@ class CursoSerializer(serializers.ModelSerializer):
     categories = serializers.SerializerMethodField()
     topics = serializers.SerializerMethodField()
 
-    sub_categories = CategorySerializer(many=True, read_only=True)
+    href = serializers.SerializerMethodField()
     
     class Meta:
         model =  Curso
         fields = '__all__'
+
+    def get_href(self, obj):
+        return obj.get_absolute_url()
+
 
     def get_categories(self, obj):
         return [category.name for category in obj.categories.all()]

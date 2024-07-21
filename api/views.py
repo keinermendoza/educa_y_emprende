@@ -41,9 +41,9 @@ class CursosListAPIView(ListAPIView):
         queryset = self.filter_queryset(self.get_queryset())
 
         # extra data
-        topics = set(Topic.objects.filter(id__in=queryset.values_list('topics', flat=True)).values_list('name', flat=True))
-        categories = set(Category.objects.filter(id__in=queryset.values_list('categories', flat=True)).values_list('name', flat=True))
-        brands = set(queryset.values_list('brand', flat=True))
+        topics = sorted(set(Topic.objects.filter(id__in=queryset.values_list('topics', flat=True)).values_list('name', flat=True)))
+        categories = sorted(set(Category.objects.filter(id__in=queryset.values_list('categories', flat=True)).values_list('name', flat=True)))
+        brands = sorted(set(queryset.values_list('brand', flat=True)))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
