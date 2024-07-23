@@ -1,5 +1,5 @@
 import React from 'react'
-import {clientAxios} from '../services/axios';
+import {axiosInstance} from '../services/axios';
 import FilterAside from '../components/ui/FilterAside';
 import CursoList from '../components/ui/CursoList';
 import SearchBar from '../components/ui/SearchBar';
@@ -11,10 +11,9 @@ export default function Cursos() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   
-  const [endpoint, setEndpoint] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
-
+  const [currentPage, setCurrentPage] = useState(searchParams.get('page')) 
 
 
   const [brands, setBrands] = useState([]);
@@ -26,7 +25,6 @@ export default function Cursos() {
   const [categories, setCategories] = useState([])
 
   const initialLoad = useRef(true)
-  const isFiltering = useRef(true)
 
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -43,6 +41,7 @@ export default function Cursos() {
       prev.includes(value)
         ? prev.filter(cat => cat !== value)
         : [...prev, value])
+    setCurrentPage(null)
 
   }
 
@@ -52,28 +51,45 @@ export default function Cursos() {
       prev.includes(value)
         ? prev.filter(cat => cat !== value)
         : [...prev, value])
+    setCurrentPage(null)
 
   }
 
+  const handleBrandsChange = (e) => {
+    const value = e.target.value;
+    setBrandsSelected(prevBrands =>
+      prevBrands.includes(value)
+        ? prevBrands.filter(brand => brand !== value)
+        : [...prevBrands, value]
+    );
+    setCurrentPage(null)
+  };
+
+  const handleChangePage = (page) => {
+    setCurrentPage(page)
+  }
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setCurrentPage(null)
+  };
 
 
 
   const updateSearchParams = () => {
     const params = new URLSearchParams();
-    if (isFiltering.current) {
+  
       brandsSelected.forEach(brand => params.append('brand', brand));
       categoriesSelected.forEach(brand => params.append('categories', brand));
       topicsSelected.forEach(topic => params.append('topics', topic));
       if (title) params.append('title', title);
-    setSearchParams(params)
-    } else {
-    setSearchParams(endpoint)
-    }
+      if (currentPage) params.append('page', currentPage)
+      setSearchParams(params)
   }
 
   useEffect(() => {
     updateSearchParams()
-  },[title, categoriesSelected, brandsSelected, topicsSelected, endpoint])
+  },[title, categoriesSelected, brandsSelected, topicsSelected, currentPage])
   // const updateCategories = async () => {
   //   const params = new URLSearchParams();
   //   brands.forEach(brand => params.append('brand', brand));
@@ -90,9 +106,8 @@ export default function Cursos() {
     const getCursos = async () => {
       try {
         // setLoading(true);
-        const completeEndpoint = isFiltering.current ? "filter/cursos" + "?" + searchParams.toString() : endpoint;  
-        
-        const response = await clientAxios.get(completeEndpoint);
+        const endpoint = "filter/cursos" + "?" + searchParams.toString()
+        const response = await axiosInstance.get(endpoint);
       
         // if (!response.ok) {
         //   throw new Error('Error en la solicitud');
@@ -102,13 +117,15 @@ export default function Cursos() {
           setCategories(response.data.extra.categories)
           setTopics(response.data.extra.topics)
         }
+     
+
         initialLoad.current = false
         
         setCursos(response.data.results);
         setCount(response.data.count)
-
-        setNextPage(response.data.next)
-        setPrevPage(response.data.previous)
+        setCurrentPage(response.data.current_page_number)
+        setNextPage(response.data.next_page_number)
+        setPrevPage(response.data.previous_page_number)
 
         
       } catch (error) {
@@ -119,31 +136,14 @@ export default function Cursos() {
       //   setLoading(false);
       // }
     };
-
-    console.log(searchParams.toString())
+    // const scrollPosition = window.innerHeight;
     getCursos()
-    isFiltering.current = true
+    // window.scrollTo(0, document.documentElement.scrollHeight);
     
   }, 
-  [searchParams, endpoint]);
+  [searchParams]);
 
-  const handleBrandsChange = (e) => {
-    const value = e.target.value;
-    setBrandsSelected(prevBrands =>
-      prevBrands.includes(value)
-        ? prevBrands.filter(brand => brand !== value)
-        : [...prevBrands, value]
-    );
-  };
-
-  const handleChangePage = (page) => {
-    isFiltering.current = false
-    setEndpoint(page)
-  }
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
+  
 
   const [filterMobileOpen, setFilterMobileOpen] = useState(false)
 

@@ -1,3 +1,4 @@
+from django.db.models.functions import Lower
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -41,9 +42,11 @@ class CursosListAPIView(ListAPIView):
         queryset = self.filter_queryset(self.get_queryset())
 
         # extra data
-        topics = sorted(set(Topic.objects.filter(id__in=queryset.values_list('topics', flat=True)).values_list('name', flat=True)))
-        categories = sorted(set(Category.objects.filter(id__in=queryset.values_list('categories', flat=True)).values_list('name', flat=True)))
+        # topics = sorted(set(Topic.objects.filter(id__in=queryset.values_list('topics', flat=True)).values_list('name', flat=True)))
+        # categories = sorted(set(Category.objects.filter(id__in=queryset.values_list('categories', flat=True)).values_list('name', flat=True)))
+        categories = Category.objects.annotate(lower_name=Lower('name')).values_list('name', flat=True).order_by('lower_name')
         brands = sorted(set(queryset.values_list('brand', flat=True)))
+        topics = Topic.objects.annotate(lower_name=Lower('name')).values_list('name', flat=True).order_by('lower_name')
 
         page = self.paginate_queryset(queryset)
         if page is not None:
