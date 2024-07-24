@@ -1,29 +1,33 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  // darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./src/chadcn/components/ui/**.{js,jsx}",
+    "./src/js/**/**/*.{js,jsx}",
+    "./src/components/ui/**.{js,jsx}",
+
+    "./core/templates/**/**/*.html",
   ],
   prefix: "",
   theme: {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-          'xs': '490px',
-          'xxs':'320px',
-          'mdl':'800px',
-        "2xl": "1400px",
-      },
+      
     },
     extend: {
       fontFamily: {
         lalezar: ["lalezar", "sans-serif"],
+        crimson: ["crimson", "serif"],
+
 
       },
+      screens: {
+        'xs': '490px',
+        'xxs':'320px',
+        'mdl':'800px',
+      "2xl": "1400px",
+    },
       colors: {
         'c-black': '#2D294B',
         'primary': '#1b98e0',

@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+[x-cloak] {
+  display: none;
+}
+@layer components {
+  .bg-primary-gradient {
+      @apply bg-gradient-to-b from-[#FF7E1A] to-[#CC4F68];
+  }
+  .bg-secondary-gradient {
+      @apply bg-gradient-to-b from-[#CF33FB] to-[#9904C3];
+  }
+  .bg-footer-gradient {
+      @apply bg-gradient-to-b from-[#393366] to-[#2D294B];
+  }
+
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

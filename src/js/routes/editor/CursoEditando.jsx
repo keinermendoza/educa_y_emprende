@@ -5,6 +5,17 @@ import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import {axiosInstance} from '../../services/axios';
 import Switch from "react-custom-checkbox/switch";
 import ReactFileReader from "react-file-reader";
+import { Link } from 'react-router-dom';
+
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+  } from "@components/breadcrumb"
+
 
 export default function CursoEditando() {
     const {id} = useParams()
@@ -76,6 +87,41 @@ export default function CursoEditando() {
 
     return (
         <>
+
+        <Breadcrumb className="mt-1 mb-2">
+            <BreadcrumbList>
+                <BreadcrumbItem>
+                    <BreadcrumbLink>
+                        <Link to='/editor'>
+                            Sitio del Editor
+                        </Link>
+                    </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                    <BreadcrumbLink>
+                        <Link to='/editor/cursos'>
+                        Cursos
+                        </Link>
+                    </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                
+                <BreadcrumbItem>
+                    <BreadcrumbLink>
+                    <Link to='../vista-previa'>
+                        {curso.title}
+                    </Link>
+                    </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+
+                <BreadcrumbItem>
+                    <BreadcrumbPage>editando...</BreadcrumbPage>
+                </BreadcrumbItem>
+            </BreadcrumbList>
+        </Breadcrumb>
+        
             <h1>Editando</h1>
             <form method='post' onSubmit={handleSubmit} >
                 <input type="text" name='title' value={title} onInput={(e) => setTilte(e.target.value)} />

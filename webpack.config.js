@@ -42,12 +42,13 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 9000
+        extensions: ['.js', '.jsx'],
+
+        alias: {
+            '@components': path.resolve(__dirname, 'src/chadcn/components/ui/'),
+            '@utils': path.resolve(__dirname, 'src/chadcn/lib/utils/')
+        }
     }
+    
     
 }

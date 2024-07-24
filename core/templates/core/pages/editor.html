@@ -3,5 +3,8 @@
     <c-slot name="script">
         <script defer src="{% static 'js/editor.js' %}"></script>
     </c-slot>
-    <div id="editor-root"></div>
+    <c-layout.section id="editor-application-section" extra_class="min-h-screen bg-gray-200">
+        <div class="pt-8" id="editor-root"></div>
+    </c-layout.section>
+
 </c-layout.base >
