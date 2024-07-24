@@ -4,6 +4,8 @@ module.exports = {
     entry: {
         index: './src/js/index.js',
         cursos: './src/js/cursos.js',
+        editor:'./src/js/editor.js',
+
         vendor: './src/js/vendor.js',
         // editor_app:'./src/react/editor_app.jsx',
     },

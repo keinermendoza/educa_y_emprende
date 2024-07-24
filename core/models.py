@@ -3,6 +3,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django_extensions.db.fields import AutoSlugField
 
+
+
 class Category(models.Model):
     name = models.CharField('Nombre', max_length=150)
 
@@ -63,5 +65,19 @@ class Curso(models.Model):
         ]
         ordering = ["-created"]
 
+
+class ImageCurso(models.Model):
+    curso = models.ForeignKey(
+        Curso,
+        on_delete=models.CASCADE,
+        related_name="images_curso",
+    )
+    image = models.ImageField(upload_to="cursos_images")
+
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     

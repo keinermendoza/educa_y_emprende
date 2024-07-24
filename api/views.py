@@ -8,6 +8,27 @@ from django_filters import rest_framework as filters
 from rest_framework.pagination import PageNumberPagination
 from .pagination import PagPageNumberPaginationExtraParams
 
+from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
+from rest_framework import status
+from rest_framework.permissions import IsAdminUser
+from rest_framework.parsers import FormParser, MultiPartParser 
+from rest_framework.generics import (
+    ListCreateAPIView,
+    GenericAPIView,
+    RetrieveUpdateDestroyAPIView
+)
+from core.models import (
+    Curso,
+    ImageCurso
+)
+
+
+from .serializers import (
+    CursoSerializer,
+    ImageCursoSerializers
+)
+
 from core.models import (
     Curso,
     Category,
@@ -93,3 +114,54 @@ class CategoriesAPIView(APIView):
             queryset = queryset.filter(cursos__brand__in=brand).distinct()
         return Response(queryset.values_list('name', flat=True))
         
+
+
+
+class CursosList(ListCreateAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = CursoSerializer
+    queryset = Curso.objects.all()
+
+class CursoRetriveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser]
+    
+    parser_classes = [MultiPartParser, FormParser]
+    serializer_class = CursoSerializer
+    queryset = Curso.objects.all()
+
+class DeleteImage(APIView):
+    permission_classes = [IsAdminUser]
+    
+    def delete(self, request, *args, **kwargs):
+        image = get_object_or_404(ImageCurso, pk=kwargs.get('pk'))
+        image.delete()
+        return Response({'message': 'Eliminado con exito'}, status=status.HTTP_200_OK)
+
+
+class UploadImage(GenericAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = ImageCursoSerializers
+    queryset = ImageCurso.objects.all()
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request, pk):
+        try:
+            curso = Curso.objects.get(pk=pk)
+        except Curso.DoesNotExist:
+            return Response(
+                {"message": "Curso no existe"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        image = serializer.save(curso=curso)
+        return Response(
+            {
+                "success": 1,
+                "file": {
+                    "url": image.image.url,
+                    "id": image.id
+                },
+            }
+        )
+    

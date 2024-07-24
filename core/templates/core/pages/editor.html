@@ -1,0 +1,7 @@
+{% load static %}
+<c-layout.base title="Sitio del Editor">
+    <c-slot name="script">
+        <script defer src="{% static 'js/editor.js' %}"></script>
+    </c-slot>
+    <div id="editor-root"></div>
+</c-layout.base >

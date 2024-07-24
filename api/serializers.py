@@ -2,9 +2,31 @@ from rest_framework import serializers
 from core.models import (
     Curso,
     Category,
-    Topic
+    Topic,
+    ImageCurso
+
     # SubCategory
 )
+
+from core.models import (
+    Curso,
+)
+
+class CursoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Curso
+        fields = '__all__'
+
+class CursoTitleSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Curso
+        fields = ['id', 'title']
+
+         
+class ImageCursoSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ImageCurso
+        fields = ['image']
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:

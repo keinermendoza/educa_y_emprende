@@ -11,6 +11,8 @@ from .models import (
     # SubCategory
 )
 
+from .permissions import IsAdmin
+
 # from ..api.filters import CursoFilter
 
 class HomeView(TemplateView):
@@ -26,6 +28,10 @@ class HomeView(TemplateView):
 
 class CursosView(TemplateView):  
     template_name = "core/pages/cursos.html"
+
+
+class EditorView(IsAdmin, TemplateView):
+    template_name = "core/pages/editor.html"
 
 
 # class CursosView(ListView):
