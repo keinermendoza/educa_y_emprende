@@ -12,7 +12,7 @@ import {
 } from "@components/breadcrumb"
 import { MoreHorizontal, Trash2, SquarePen, Eye } from "lucide-react"
 
-
+import { Badge } from "@components/badge"
 function formatearFecha(fechaISO) {
   const fecha = new Date(fechaISO);
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -63,10 +63,10 @@ export default function CursoVistaPrevia() {
     </Link>
 
       <div className="flex flex-col gap-2 md:flex-row justify-between items-center ">
-        <p>Este curso {curso.is_public && 'NO'} es público</p>
-        
-
+        <p>Este curso {!curso.is_public && 'NO'} es público</p>
       </div>
+
+      <h2 className='text-4xl'>{curso.title}</h2>
 
         <figure className=''>
           <img 
@@ -74,7 +74,29 @@ export default function CursoVistaPrevia() {
             src={curso?.image} 
             alt={curso.title} />
         </figure>
-        <h2>Cursos {curso.title}</h2>
+        
+        {curso?.categories && 
+        <div>
+          <h4>Categorías</h4>
+          <div className='flex gap-2'>
+            {curso?.categories.map((category) => (
+              <Badge key={category.id}>{category.name}</Badge>
+            ))}
+          </div>
+        </div>
+        }
+
+        {curso?.topics && 
+        <div>
+          <h4>Temas</h4>
+          <div className='flex gap-2'>
+            {curso?.topics.map((topic) => (
+              <Badge key={topic.id}>{topic.name}</Badge>
+            ))}
+          </div>
+        </div>
+        }
+
         {isEdited
           ? (<p className=''>Actualizado el {formatearFecha(curso.updated)}</p>)
           : (<p className=''>Creado el {formatearFecha(curso.created)}</p>)

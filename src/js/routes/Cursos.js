@@ -80,7 +80,7 @@ export default function Cursos() {
     const params = new URLSearchParams();
   
       brandsSelected.forEach(brand => params.append('brand', brand));
-      categoriesSelected.forEach(brand => params.append('categories', brand));
+      categoriesSelected.forEach(category => params.append('categories', category));
       topicsSelected.forEach(topic => params.append('topics', topic));
       if (title) params.append('title', title);
       if (currentPage) params.append('page', currentPage)
@@ -90,13 +90,7 @@ export default function Cursos() {
   useEffect(() => {
     updateSearchParams()
   },[title, categoriesSelected, brandsSelected, topicsSelected, currentPage])
-  // const updateCategories = async () => {
-  //   const params = new URLSearchParams();
-  //   brands.forEach(brand => params.append('brand', brand));
-  //   const response =  await axiosInstance.get("filter/categories" + "?" + params.toString());
-  //   setCategories(response.data)
-  //   return response.data
-  // }
+ 
 
   
 

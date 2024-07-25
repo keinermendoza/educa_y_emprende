@@ -42,7 +42,7 @@ class Curso(models.Model):
     summary = models.CharField('Resumen', max_length=152, blank=True, null=True)
     description = models.JSONField('Descripción', blank=True, null=True)
     categories = models.ManyToManyField(Category, verbose_name='Categoría', related_name='cursos')
-    topics = models.ManyToManyField(Topic, verbose_name='Temas', related_name='cursos')
+    topics = models.ManyToManyField(Topic, verbose_name='Temas', related_name='cursos', blank=True, null=True)
 
     created = models.DateTimeField('Fecha de Creación', auto_now_add=True)
     updated = models.DateTimeField('Última Actualización',auto_now=True)

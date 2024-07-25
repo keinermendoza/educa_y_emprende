@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useContext, useState } from 'react'
 import { EditorContext } from '../../contexts/EditorContext';
 import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import {axiosInstance} from '../../services/axios';
-import Switch from "react-custom-checkbox/switch";
+// import Switch from "react-custom-checkbox/switch";
 import ReactFileReader from "react-file-reader";
 import { Link } from 'react-router-dom';
 
@@ -16,6 +16,33 @@ import {
     BreadcrumbSeparator,
   } from "@components/breadcrumb"
 
+import { Input } from "@components/input"
+import { Label } from "@components/label"
+import { Switch } from "@components/switch"
+import { Button } from '@components/button';
+import { Save } from 'lucide-react' 
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@components/select"
+
+
+  import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@components/alert-dialog"
+
+import { Alert, AlertDescription, AlertTitle } from "@components/alert"
 
 export default function CursoEditando() {
     const {id} = useParams()
@@ -28,6 +55,15 @@ export default function CursoEditando() {
     // image preview and file
     const [imagePreview, setImagePreview] = useState(curso?.image)
     const [imageFile, setImageFile] = useState(null)
+    const [brand, setBrand] = useState(curso?.brand)
+    const [categories, setCategories] = useState(curso?.categories?.map(cat => cat.id) || [])
+    const [topics, setTopics] = useState(curso?.topics?.map(top => top.id) || [])
+
+
+    const [availableCategories, setAvailableCategories] = useState(null)
+    const [availableTopics, setAvailableTopics] = useState(null)
+
+
     
     // init editorjs
     const editorRef = useRef(null)
@@ -38,7 +74,37 @@ export default function CursoEditando() {
             initEditor({id:id, data:initialDescription.current})
             editorRef.current = true
         }
+        const getData = async () => {
+            try {
+                const catResp = await axiosInstance.get('categories')
+                const topicsResp = await axiosInstance.get('topics')
+                setAvailableCategories(catResp.data)
+                setAvailableTopics(topicsResp.data)
+            } catch(err) {
+                console.error(err)
+            }
+        }
+        getData()
     },[])
+
+    const handleBrandChange = (value) => {
+        setBrand(value)
+    }
+    const handleCategorySelect = (e) => {
+        const value = parseInt(e.target.value);
+        setCategories(prev =>
+          prev.includes(value)
+            ? prev.filter(cat => cat !== value)
+            : [...prev, value])
+      }
+
+    const handleTopicSelect = (e) => {
+        const value = parseInt(e.target.value);
+        setTopics(prev =>
+          prev.includes(value)
+            ? prev.filter(top => top !== value)
+            : [...prev, value])
+      }
 
     const handleUploadImage = (files) => {
         // get file
@@ -68,13 +134,17 @@ export default function CursoEditando() {
         const formData = new FormData()
         formData.append('is_public', isPublic)
         formData.append('title', title)
+        formData.append('brand', brand)
+        categories.forEach(category => formData.append('categories', category));
+        topics.forEach(topic => formData.append('topics', topic));
+
         formData.append('description', JSON.stringify(description))
         if(imageFile) {
             formData.append('image', imageFile)
         }
     
         try {
-            const resp = await axiosInstance.put(`cursos/${id}/`, formData, {
+            const resp = await axiosInstance.put(`cursos/update/${id}/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -88,7 +158,7 @@ export default function CursoEditando() {
     return (
         <>
 
-        <Breadcrumb className="mt-1 mb-2">
+        <Breadcrumb className="mt-1 mb-2 w-fit mx-auto">
             <BreadcrumbList>
                 <BreadcrumbItem>
                     <BreadcrumbLink>
@@ -122,43 +192,146 @@ export default function CursoEditando() {
             </BreadcrumbList>
         </Breadcrumb>
         
-            <h1>Editando</h1>
-            <form method='post' onSubmit={handleSubmit} >
-                <input type="text" name='title' value={title} onInput={(e) => setTilte(e.target.value)} />
+            <h1 className='text-2xl w-fit mx-auto'>Editando curso: <span className='text-orange-500'>{title}</span></h1>
+            <form className='mx-auto w-full max-w-lg flex flex-col gap-4' method='post' onSubmit={handleSubmit} >
+                <Alert className='flex flex-col gap-2'>
+                    <div className="flex flex-col space-y-1.5">
+                    <Label className='text-lg' htmlFor="title">Nombre</Label>
+                    <Input 
+                        value={title}
+                        onInput={(e) => setTilte(e.target.value)}
+                        required
+                        name="title"
+                        id="title"
+                        placeholder="Nombre del curso" />
+                    </div>
 
-                <div className='relative w-60 h-60 rounded-md '>
-                    <figure className='w-full h-full overflow-hidden bg-gray-300'>
-                        {imagePreview && <img className='object-cover h-full w-full' src={imagePreview} alt="introduzca su imagen aqui" />}
-                    </figure>
+                    <div className='relative w-[clamp(100%,350px,20vw)] h-[350px] rounded-md '>
+                        <figure className='w-full h-full overflow-hidden bg-gray-300'>
+                            {imagePreview && <img className='object-cover h-full w-full' src={imagePreview} alt="introduzca su imagen aqui" />}
+                        </figure>
 
-                    <ReactFileReader
-                        fileTypes={[".png", ".jpg", ".jpeg", ".webp"]}
-                        handleFiles={handleUploadImage} >
-                        <button
-                            type='button'
-                            className='absolute bottom-0 right-0 rounded-full grid place-content-center p-1  border-solid 
-                            bg-gray-300 border-2 border-black transition-transform hover:scale-110'
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 50 50"><path fill="currentColor" d="m9.6 40.4l2.5-9.9L27 15.6l7.4 7.4l-14.9 14.9zm4.3-8.9l-1.5 6.1l6.1-1.5L31.6 23L27 18.4z"/><path fill="currentColor" d="M17.8 37.3c-.6-2.5-2.6-4.5-5.1-5.1l.5-1.9c3.2.8 5.7 3.3 6.5 6.5z"/><path fill="currentColor" d="m29.298 19.287l1.414 1.414l-13.01 13.02l-1.414-1.41zM11 39l2.9-.7c-.3-1.1-1.1-1.9-2.2-2.2zm24-16.6L27.6 15l3-3l.5.1c3.6.5 6.4 3.3 6.9 6.9l.1.5zM30.4 15l4.6 4.6l.9-.9c-.5-2.3-2.3-4.1-4.6-4.6z"/></svg>
-                        </button>
-                  </ ReactFileReader >
-                </div>
-               
-                <div class="editorjs" id="editorjs"></div>
+                        <ReactFileReader
+                            fileTypes={[".png", ".jpg", ".jpeg", ".webp"]}
+                            handleFiles={handleUploadImage} >
+                            <button
+                                type='button'
+                                className='absolute bottom-0 right-0 rounded-full grid place-content-center p-1  border-solid 
+                                bg-gray-300 border-2 border-black transition-transform hover:scale-110'
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 50 50"><path fill="currentColor" d="m9.6 40.4l2.5-9.9L27 15.6l7.4 7.4l-14.9 14.9zm4.3-8.9l-1.5 6.1l6.1-1.5L31.6 23L27 18.4z"/><path fill="currentColor" d="M17.8 37.3c-.6-2.5-2.6-4.5-5.1-5.1l.5-1.9c3.2.8 5.7 3.3 6.5 6.5z"/><path fill="currentColor" d="m29.298 19.287l1.414 1.414l-13.01 13.02l-1.414-1.41zM11 39l2.9-.7c-.3-1.1-1.1-1.9-2.2-2.2zm24-16.6L27.6 15l3-3l.5.1c3.6.5 6.4 3.3 6.9 6.9l.1.5zM30.4 15l4.6 4.6l.9-.9c-.5-2.3-2.3-4.1-4.6-4.6z"/></svg>
+                            </button>
+                    </ ReactFileReader >
+                    </div>
+                </Alert>
 
-                <Switch
-                    checked={isPublic}
-                    onChange={() => setIsPublic((prev) => !prev)}
-                    name="is_public"
-                    label="Hacer Público?"
-                    labelClassName="text-sm italic font-medium"
-                    icon={
-                    <svg viewBox="0 0 24 24" role="presentation" aria-hidden="true">
-                        <path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
-                    </svg>
-                    }
-                />
-                <button type='submit' className="bg-blue-500 px-3 py-1 rounded-md">Guardar</button>
+
+                <Alert>
+
+                 <div className="flex items-center space-x-2">
+                     <Switch
+                         checked={isPublic}
+                         onCheckedChange={() => setIsPublic((prev) => !prev)}
+                         name="is_public"
+                     />
+                     <Label 
+                        className='text-lg'
+                        onClick={() => setIsPublic((prev) => !prev)}
+                        htmlFor="is_public">
+                            Hacer Curso Público
+                    </Label>
+                 </div>
+                 </Alert>
+
+                <Alert>
+                    <Label className='text-lg mb-2'>Motivación</Label>
+                    <Select
+                        defaultValue={brand} 
+                        onValueChange={(value) => handleBrandChange(value)} >
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Motivación del Curso" />
+                        </SelectTrigger>
+
+                        <SelectContent>
+                            <SelectItem value="per">Desarrollo Personal</SelectItem>
+                            <SelectItem value="pro">Crecimiento Profesional</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </Alert>
+
+
+                <Alert className='flex flex-col gap-2'>
+                <h4 className='text-lg'>Categorías</h4>
+                {availableCategories?.map((category) => (
+                    <Label
+                        key={category.id}
+                        className='w-fit flex gap-2 items-center'
+                    >
+                        <input
+                            type='checkbox'
+                            value={category.id}
+                            checked={categories.includes(category.id)}
+                            onChange={handleCategorySelect} 
+                            />
+                        <span>{category.name}</span>
+                    </Label>
+                ))}
+                </Alert>
+
+
+
+                <Alert className='flex flex-col gap-2'>
+                <h4 className='text-lg'>Temas</h4>
+                <p>Selecciona todos los temas que tienen relacion con el Curso. Tambien puedes agregar una nuevo tema usando el siguiente botón.</p>
+                
+                <AlertDialog>
+                    <AlertDialogTrigger>Cambiar esto por un dialog comun</AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your account
+                            and remove your data from our servers.
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                    </AlertDialog>
+                {availableTopics?.map((topic) => (
+                    <Label
+                        key={topic.id}
+                        className='w-fit flex gap-2 items-center'
+                    >
+                        <input
+                            type='checkbox'
+                            value={topic.id}
+                            checked={topics.includes(topic.id)}
+                            onChange={handleTopicSelect} 
+                            />
+                        <span>{topic.name}</span>
+                    </Label>
+                ))}
+                </Alert>
+
+                <Alert>
+                  <AlertTitle>Descripción del Curso</AlertTitle>
+                    <AlertDescription>
+                        <div className="editorjs" id="editorjs"></div>
+                    </AlertDescription>
+                    <h4></h4>
+                </Alert>
+   
+             
+                <Button >
+                    <Save className="mr-2 h-4 w-4"  />
+                    Guardar
+                </Button>
+                
+
+                {/* <button type='submit' className="bg-blue-500 px-3 py-1 rounded-md">Guardar</button> */}
             </form>
         </>
     )

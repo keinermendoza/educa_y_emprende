@@ -76,7 +76,7 @@ export default function Cursos() {
     </Breadcrumb>
   
 
-    <div className="flex flex-col lg:flex-row-reverse gap-5 relative"> 
+    <div className="flex flex-col lg:flex-row gap-5 relative"> 
       <div className="">
       <Card className="w-[350px] sticky top-20">
           <CardHeader>

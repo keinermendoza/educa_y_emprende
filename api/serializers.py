@@ -28,24 +28,34 @@ class ImageCursoSerializers(serializers.ModelSerializer):
         model = ImageCurso
         fields = ['image']
 
-class TopicSerializer(serializers.ModelSerializer):
+class TopicNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['name']
-        
-    def get_name(self, obj):
-        return [topic.name for topic in obj.objects.all()]
+        fields = ['id', 'name']
     
-class CategorySerializer(serializers.ModelSerializer):
+class CategoryNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name']
+        fields = ['id', 'name']
 
-    def get_name(self, obj):
-        return [category.name for category in obj.objects.all()]
+
+class CursoEditorSerializer(serializers.ModelSerializer):
+    # categories = CategoryNameSerializer(many=True, read_only=True)
+    # topics = TopicNameSerializer(many=True, read_only=True)
     
+    class Meta:
+        model = Curso
+        fields = '__all__'
 
-class CursoSerializer(serializers.ModelSerializer):
+class CursoDetailSerializer(serializers.ModelSerializer):
+    categories = CategoryNameSerializer(many=True, read_only=True)
+    topics = TopicNameSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Curso
+        fields = '__all__'
+
+class CursoPublicSerializer(serializers.ModelSerializer):
     # categories = CategorySerializer(many=True, read_only=True)
     categories = serializers.SerializerMethodField()
     topics = serializers.SerializerMethodField()
@@ -58,7 +68,6 @@ class CursoSerializer(serializers.ModelSerializer):
 
     def get_href(self, obj):
         return obj.get_absolute_url()
-
 
     def get_categories(self, obj):
         return [category.name for category in obj.categories.all()]

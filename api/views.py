@@ -13,10 +13,15 @@ from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.parsers import FormParser, MultiPartParser 
+
+from rest_framework.mixins import DestroyModelMixin
 from rest_framework.generics import (
     ListCreateAPIView,
+    ListAPIView,
     GenericAPIView,
-    RetrieveUpdateDestroyAPIView
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+    RetrieveAPIView
 )
 from core.models import (
     Curso,
@@ -25,8 +30,12 @@ from core.models import (
 
 
 from .serializers import (
-    CursoSerializer,
-    ImageCursoSerializers
+    CursoEditorSerializer,
+    CursoPublicSerializer,
+    CursoDetailSerializer,
+    ImageCursoSerializers,
+    CategoryNameSerializer,
+    TopicNameSerializer
 )
 
 from core.models import (
@@ -34,10 +43,7 @@ from core.models import (
     Category,
     Topic
 )
-from .serializers import (
-    CursoSerializer,
-    CategorySerializer,
-)
+
 from .filters import (
     CursoFilter,
     CategoryFilter,
@@ -46,7 +52,7 @@ from .filters import (
 
 class CursosListAPIView(ListAPIView):
     permission_classes = [AllowAny]
-    serializer_class = CursoSerializer
+    serializer_class = CursoPublicSerializer
     queryset = Curso.objects.filter(is_public=True) 
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CursoFilter
@@ -85,48 +91,36 @@ class CursosListAPIView(ListAPIView):
             })
     
 
-class TopicsAPIView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        queryset = Topic.objects.all()
-        queryset = TopicFilter(self.request.GET, queryset=queryset)
-        print(queryset.qs)
-        # brand = self.request.query_params.getlist('brand', None)
-        # print(brand)
-        # if brand:
-        #     queryset = queryset.filter(cursos__brand__in=brand).distinct()
-        
-        # categories = self.request.query_params.getlist('categories', None)
-        # if categories:
-        #     queryset = queryset.filter(cursos__categories__name__in=categories).distinct()
-        
-        return Response(queryset.qs.values_list('name', flat=True))
-
-
-class CategoriesAPIView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        queryset = Category.objects.all()
-        brand = self.request.query_params.getlist('brand', None)
-        if brand:
-            queryset = queryset.filter(cursos__brand__in=brand).distinct()
-        return Response(queryset.values_list('name', flat=True))
-        
-
-
-
-class CursosList(ListCreateAPIView):
+class TopicsAPIView(ListAPIView):
     permission_classes = [IsAdminUser]
-    serializer_class = CursoSerializer
+    serializer_class = TopicNameSerializer
+    queryset = Topic.objects.all()
+    pagination_class = None
+    
+
+
+class CategoriesAPIView(ListAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = CategoryNameSerializer
+    queryset = Category.objects.all()
+    pagination_class = None
+
+
+class CursoUpdateAPIView(UpdateAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = CursoEditorSerializer
     queryset = Curso.objects.all()
 
-class CursoRetriveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+class CursosListEditorAPIView(ListCreateAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = CursoEditorSerializer
+    queryset = Curso.objects.all()
+
+class CursoRetriveUpdateDestroy(RetrieveAPIView, DestroyModelMixin):
     permission_classes = [IsAdminUser]
     
     parser_classes = [MultiPartParser, FormParser]
-    serializer_class = CursoSerializer
+    serializer_class = CursoDetailSerializer
     queryset = Curso.objects.all()
 
 class DeleteImage(APIView):
