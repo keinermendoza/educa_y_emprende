@@ -30,17 +30,8 @@ import {
   } from "@components/select"
 
 
-  import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-  } from "@components/alert-dialog"
+import DialogInputCreate from '../../components/DialogInputCreate';
+import DropdownEditDelete from '../../components/DropdownEditDelete';
 
 import { Alert, AlertDescription, AlertTitle } from "@components/alert"
 
@@ -64,6 +55,9 @@ export default function CursoEditando() {
     const [availableTopics, setAvailableTopics] = useState(null)
 
 
+    // create categories and topics
+    const [newCategory, setNewCategory] = useState(null)
+    const [newTopic, setNewTopic] = useState(null)
     
     // init editorjs
     const editorRef = useRef(null)
@@ -86,6 +80,24 @@ export default function CursoEditando() {
         }
         getData()
     },[])
+
+    const handleTopicCreate = async () => {
+        try {
+            const resp = await axiosInstance.post('topics', {name:newTopic})
+            setAvailableTopics(prev => [...prev, resp.data])
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    const handleCategoryCreate = async () => {
+        try {
+            const resp = await axiosInstance.post('categories', {name:newCategory})
+            setAvailableCategories(prev => [...prev, resp.data])
+        } catch(err) {
+            console.error(err)
+        }
+    }
 
     const handleBrandChange = (value) => {
         setBrand(value)
@@ -261,59 +273,73 @@ export default function CursoEditando() {
 
 
                 <Alert className='flex flex-col gap-2'>
-                <h4 className='text-lg'>Categorías</h4>
-                {availableCategories?.map((category) => (
-                    <Label
-                        key={category.id}
-                        className='w-fit flex gap-2 items-center'
-                    >
-                        <input
-                            type='checkbox'
-                            value={category.id}
-                            checked={categories.includes(category.id)}
-                            onChange={handleCategorySelect} 
-                            />
-                        <span>{category.name}</span>
-                    </Label>
-                ))}
+                    <h4 className='text-lg'>Categorías</h4>
+                    <p>Selecciona todas las categorías que tienen relacion con el Curso. Tambien puedes agregar una nueva categoría usando el siguiente botón.</p>
+
+                    <DialogInputCreate 
+                        btnText='Crear Nueva Categoría'
+                        title='Nueva Categoría'
+                        helpText='Escribe el nombre de la nueva categoría'
+                        value={newCategory}
+                        setValue={setNewCategory}
+                        handleSave={handleCategoryCreate}
+                    />
+
+                    {availableCategories?.map((category) => (
+                        <div 
+                            key={category.id}
+                            className="flex justify-between">
+                            <Label
+                                className='w-fit flex gap-2 items-center'
+                            >
+                                <input
+                                    type='checkbox'
+                                    value={category.id}
+                                    checked={categories.includes(category.id)}
+                                    onChange={handleCategorySelect} 
+                                    />
+                                <span>{category.name}</span>
+                            </Label>
+                            <DropdownEditDelete />
+
+                        </div>
+
+                    ))}
                 </Alert>
 
 
 
                 <Alert className='flex flex-col gap-2'>
-                <h4 className='text-lg'>Temas</h4>
-                <p>Selecciona todos los temas que tienen relacion con el Curso. Tambien puedes agregar una nuevo tema usando el siguiente botón.</p>
-                
-                <AlertDialog>
-                    <AlertDialogTrigger>Cambiar esto por un dialog comun</AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete your account
-                            and remove your data from our servers.
-                        </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                    </AlertDialog>
-                {availableTopics?.map((topic) => (
-                    <Label
+                    <h4 className='text-lg'>Temas</h4>
+                    <p>Selecciona todos los temas que tienen relacion con el Curso. Tambien puedes agregar un nuevo tema usando el siguiente botón.</p>
+                    
+                    <DialogInputCreate
+                        btnText='Crear Nuevo Tema'
+                        title='Nuevo Tema'
+                        helpText='Escribe el nombre del nuevo tema'
+                        value={newTopic}
+                        setValue={setNewTopic}
+                        handleSave={handleTopicCreate}
+                    />
+
+                    
+
+                    {availableTopics?.map((topic) => (
+                    <div 
                         key={topic.id}
-                        className='w-fit flex gap-2 items-center'
-                    >
-                        <input
-                            type='checkbox'
-                            value={topic.id}
-                            checked={topics.includes(topic.id)}
-                            onChange={handleTopicSelect} 
-                            />
-                        <span>{topic.name}</span>
-                    </Label>
-                ))}
+                        className="flex justify-between">
+                        <Label className='w-fit flex gap-2 items-center'>
+                            <input
+                                type='checkbox'
+                                value={topic.id}
+                                checked={topics.includes(topic.id)}
+                                onChange={handleTopicSelect} 
+                                />
+                            <span>{topic.name}</span>
+                        </Label>
+                        <DropdownEditDelete />
+                    </div>
+                    ))}
                 </Alert>
 
                 <Alert>

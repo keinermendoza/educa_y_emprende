@@ -41,8 +41,8 @@ class Curso(models.Model):
     brand = models.CharField('Motivación', max_length=3, choices=Brands.choices, default=Brands.PERSONAL)
     summary = models.CharField('Resumen', max_length=152, blank=True, null=True)
     description = models.JSONField('Descripción', blank=True, null=True)
-    categories = models.ManyToManyField(Category, verbose_name='Categoría', related_name='cursos')
-    topics = models.ManyToManyField(Topic, verbose_name='Temas', related_name='cursos', blank=True, null=True)
+    categories = models.ManyToManyField(Category, verbose_name='Categoría', related_name='cursos', blank=True)
+    topics = models.ManyToManyField(Topic, verbose_name='Temas', related_name='cursos', blank=True)
 
     created = models.DateTimeField('Fecha de Creación', auto_now_add=True)
     updated = models.DateTimeField('Última Actualización',auto_now=True)

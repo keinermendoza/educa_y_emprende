@@ -8,6 +8,7 @@ from .models import (
 class CursoAdmin(admin.ModelAdmin):
     list_display = ['title', 'brand' ,'slug', 'price', 'is_public']
     filter_horizontal = ['categories']
+    search_fields = ['title']
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

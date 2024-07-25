@@ -91,7 +91,7 @@ class CursosListAPIView(ListAPIView):
             })
     
 
-class TopicsAPIView(ListAPIView):
+class TopicsAPIView(ListCreateAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = TopicNameSerializer
     queryset = Topic.objects.all()
@@ -99,10 +99,22 @@ class TopicsAPIView(ListAPIView):
     
 
 
-class CategoriesAPIView(ListAPIView):
+class CategoriesAPIView(ListCreateAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = CategoryNameSerializer
     queryset = Category.objects.all()
+    pagination_class = None
+
+class CategoryUpdateDestroyAPIView(UpdateAPIView, DestroyModelMixin):
+    permission_classes = [IsAdminUser]
+    serializer_class = CategoryNameSerializer
+    queryset = Category.objects.all()
+    pagination_class = None
+
+class TopicUpdateDestroyAPIView(UpdateAPIView, DestroyModelMixin):
+    permission_classes = [IsAdminUser]
+    serializer_class = TopicNameSerializer
+    queryset = Topic.objects.all()
     pagination_class = None
 
 

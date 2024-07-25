@@ -5,7 +5,11 @@ app_name = 'api'
 urlpatterns = [
     path('filter/cursos', views.CursosListAPIView.as_view(), name='cursos_list' ),
     path('categories', views.CategoriesAPIView.as_view(), name='categories_list' ),
+    path('categories/<int:pk>/', views.CategoryUpdateDestroyAPIView.as_view(), name='categories_update_destroy' ),
     path('topics', views.TopicsAPIView.as_view(), name='topics_list' ),
+    path('topics/<int:pk>/', views.TopicUpdateDestroyAPIView.as_view(), name='topics_update_destroy' ),
+    
+
 
 
 
