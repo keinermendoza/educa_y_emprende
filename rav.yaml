@@ -5,5 +5,7 @@ rav:
   migrate: docker exec -it educa_y_emprende-web-1 python manage.py migrate
   seeder: docker exec -it educa_y_emprende-web-1 python manage.py seeder
   flush: docker exec -it educa_y_emprende-web-1 python manage.py flush
+  db: docker exec -it educa_y_emprende-db-1 bash
+
 
 
