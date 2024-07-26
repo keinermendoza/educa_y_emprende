@@ -1,9 +1,7 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import { axiosInstance } from '../services/axios'
 import { MoreHorizontal, Trash2, SquarePen, Eye } from "lucide-react"
  
-import { Button } from "@components/button"
-import { Label } from '@components/label'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,34 +23,44 @@ import {
     AlertDialogTrigger,
   } from "@components/alert-dialog"
 
-
-import DialogInputCreate from './DialogInputCreate'
+  import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@components/dialog"
+import { Button } from '@components/button';
+import { Input } from "@components/input"
+import { Save } from 'lucide-react' 
 // copied from  https://stackoverflow.com/questions/77787392/shadcn-ui-alert-dialog-closes-automatically-when-clicking-the-trigger-from-dropd
 
-function DeleteDialog() {
-    return (
-        <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <Button className='justify-start w-full' variant="outline">Eliminar</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your
-                    account and remove your data from our servers.
-                </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
-    )
-}
 
-export default function DropdownEditDelete() {
+export default function DropdownEditDelete({title, titleIsFem, endpoint, setListState, initialValue}) {
+    
+    const [localValue, setLocalValue] = useState(initialValue)
+
+    const handleDelete = async () => {
+        try {
+            const resp = await axiosInstance.delete(endpoint)
+            setListState(prev => prev.filter(value => value.id !== localValue.id))
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
+    const handleUpdate = async () => {
+        try {
+            const resp = await axiosInstance.put(endpoint, {pk: localValue.id, name:localValue.name})
+            setListState(prev => prev.map(value => value.id !== localValue.id ? value : ({...value, name:localValue.name})))
+        } catch(err) {
+            console.error(err)
+        }
+    }
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -64,15 +72,66 @@ export default function DropdownEditDelete() {
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel className='ms-1'>Acciones</DropdownMenuLabel>
                 <DropdownMenuItem asChild >
-                    <DeleteDialog />
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button className='justify-start w-full' variant="outline">Eliminar {title}</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                            <AlertDialogTitle className='font-crimson text-lg'>Estás seguro?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Esta acción no podrá deshacerse. Si confirmas {titleIsFem ? 'la' : 'el'} {title} <strong className='fotn-semibold'>{localValue.name}</strong> se borrará de todos los cursos en los que pudiera estar presente.
+                            </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={handleDelete}
+                            >Eliminar</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
+                
                 <DropdownMenuItem asChild>
-                    <DialogInputCreate
-                        isBtn={false}
-                        btnText='Editar'
-                    />
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant='outline' className='w-full justify-start'>
+                            Editar {title}
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                            <DialogTitle className='text-lg font-crimson'>{title}</DialogTitle>
+                                <DialogDescription>
+                                    Use el siguiente campo para cambiar el nombre de {titleIsFem ? 'la' : 'el'} {title}
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="flex items-center space-x-2">
+                                <div className="grid flex-1 gap-2">
+                                    <Input
+                                        defaultValue={localValue.name}
+                                        onInput={(e) => setLocalValue((prev) => ({ ...prev, name:e.target.value}))}
+                                    />
+                                </div>
+
+                            </div>
+                            <DialogFooter className="sm:justify-start">
+                            <DialogClose asChild>
+                                <Button 
+                                    onClick={handleUpdate}
+                                    type="button" >
+                                    <Save className="mr-2 h-4 w-4"  />
+                                    Guardar
+                                </Button>
+                            </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
                 </DropdownMenuItem>
+
             </DropdownMenuContent>
         </DropdownMenu>
     )

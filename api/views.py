@@ -14,14 +14,14 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.parsers import FormParser, MultiPartParser 
 
-from rest_framework.mixins import DestroyModelMixin
 from rest_framework.generics import (
     ListCreateAPIView,
     ListAPIView,
     GenericAPIView,
     RetrieveUpdateDestroyAPIView,
     UpdateAPIView,
-    RetrieveAPIView
+    RetrieveAPIView,
+    DestroyAPIView
 )
 from core.models import (
     Curso,
@@ -105,13 +105,13 @@ class CategoriesAPIView(ListCreateAPIView):
     queryset = Category.objects.all()
     pagination_class = None
 
-class CategoryUpdateDestroyAPIView(UpdateAPIView, DestroyModelMixin):
+class CategoryUpdateDestroyAPIView(UpdateAPIView, DestroyAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = CategoryNameSerializer
     queryset = Category.objects.all()
     pagination_class = None
 
-class TopicUpdateDestroyAPIView(UpdateAPIView, DestroyModelMixin):
+class TopicUpdateDestroyAPIView(UpdateAPIView, DestroyAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = TopicNameSerializer
     queryset = Topic.objects.all()
@@ -128,7 +128,7 @@ class CursosListEditorAPIView(ListCreateAPIView):
     serializer_class = CursoEditorSerializer
     queryset = Curso.objects.all()
 
-class CursoRetriveUpdateDestroy(RetrieveAPIView, DestroyModelMixin):
+class CursoRetriveUpdateDestroy(RetrieveAPIView, DestroyAPIView):
     permission_classes = [IsAdminUser]
     
     parser_classes = [MultiPartParser, FormParser]

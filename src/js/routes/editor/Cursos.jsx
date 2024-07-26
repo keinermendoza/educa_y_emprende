@@ -62,7 +62,7 @@ export default function Cursos() {
     <Breadcrumb className="mt-1 mb-2">
         <BreadcrumbList>
             <BreadcrumbItem>
-                <BreadcrumbLink>
+                <BreadcrumbLink asChild>
                     <Link to='/editor'>
                         Sitio del Editor
                     </Link>

@@ -16,7 +16,25 @@
       @apply bg-gradient-to-b from-[#393366] to-[#2D294B];
   }
 
+  .editorjs h2 {
+    @apply text-2xl  font-crimson;
+  }
+  .editorjs h3 {
+    @apply text-lg font-crimson;
+  }
+  .editorjs p {
+    @apply text-base leading-tight;
+  }
+  .editorjs ul {
+    @apply list-inside list-disc;
+  }
+  .editorjs img {
+    @apply w-full object-cover;
+  }
+  
 }
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -58,6 +58,10 @@ export default function CursoEditando() {
     // create categories and topics
     const [newCategory, setNewCategory] = useState(null)
     const [newTopic, setNewTopic] = useState(null)
+
+    // edit existing categories and topics
+    const [editCategory, setEditCategory] = useState(null)
+    const [editTopic, setEditTopic] = useState(null)
     
     // init editorjs
     const editorRef = useRef(null)
@@ -173,7 +177,7 @@ export default function CursoEditando() {
         <Breadcrumb className="mt-1 mb-2 w-fit mx-auto">
             <BreadcrumbList>
                 <BreadcrumbItem>
-                    <BreadcrumbLink>
+                    <BreadcrumbLink asChild>
                         <Link to='/editor'>
                             Sitio del Editor
                         </Link>
@@ -181,7 +185,7 @@ export default function CursoEditando() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                    <BreadcrumbLink>
+                    <BreadcrumbLink asChild>
                         <Link to='/editor/cursos'>
                         Cursos
                         </Link>
@@ -190,7 +194,7 @@ export default function CursoEditando() {
                 <BreadcrumbSeparator />
                 
                 <BreadcrumbItem>
-                    <BreadcrumbLink>
+                    <BreadcrumbLink asChild>
                     <Link to='../vista-previa'>
                         {curso.title}
                     </Link>
@@ -280,8 +284,9 @@ export default function CursoEditando() {
                         btnText='Crear Nueva Categoría'
                         title='Nueva Categoría'
                         helpText='Escribe el nombre de la nueva categoría'
-                        value={newCategory}
                         setValue={setNewCategory}
+                        value={newCategory}
+
                         handleSave={handleCategoryCreate}
                     />
 
@@ -300,7 +305,13 @@ export default function CursoEditando() {
                                     />
                                 <span>{category.name}</span>
                             </Label>
-                            <DropdownEditDelete />
+
+                            <DropdownEditDelete
+                                title='Categoría'
+                                initialValue={category}
+                                setListState={setAvailableCategories}
+                                endpoint={`categories/${category.id}/`}
+                            />
 
                         </div>
 
@@ -317,12 +328,10 @@ export default function CursoEditando() {
                         btnText='Crear Nuevo Tema'
                         title='Nuevo Tema'
                         helpText='Escribe el nombre del nuevo tema'
-                        value={newTopic}
                         setValue={setNewTopic}
+                        value={newTopic}
                         handleSave={handleTopicCreate}
                     />
-
-                    
 
                     {availableTopics?.map((topic) => (
                     <div 
@@ -337,7 +346,14 @@ export default function CursoEditando() {
                                 />
                             <span>{topic.name}</span>
                         </Label>
-                        <DropdownEditDelete />
+
+                        <DropdownEditDelete
+                            title='Tema'
+                            titleIsFem={false}
+                            initialValue={topic}
+                            setListState={setAvailableTopics}
+                            endpoint={`topics/${topic.id}/`}
+                        />
                     </div>
                     ))}
                 </Alert>
@@ -356,8 +372,6 @@ export default function CursoEditando() {
                     Guardar
                 </Button>
                 
-
-                {/* <button type='submit' className="bg-blue-500 px-3 py-1 rounded-md">Guardar</button> */}
             </form>
         </>
     )

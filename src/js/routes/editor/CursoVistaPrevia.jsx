@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react'
 import { useLoaderData, Link } from 'react-router-dom'
 import edjsHTML from "editorjs-html"
+import PrimaryButton from '../../components/ui/PrimaryButton'
 
 import {
   Breadcrumb,
@@ -36,7 +37,7 @@ export default function CursoVistaPrevia() {
       <Breadcrumb className="mt-1 mb-2">
         <BreadcrumbList>
             <BreadcrumbItem>
-                <BreadcrumbLink>
+                <BreadcrumbLink asChild>
                     <Link to='/editor'>
                         Sitio del Editor
                     </Link>
@@ -44,7 +45,7 @@ export default function CursoVistaPrevia() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-                <BreadcrumbLink>
+                <BreadcrumbLink asChild>
                     <Link to='/editor/cursos'>
                     Cursos
                     </Link>
@@ -56,55 +57,87 @@ export default function CursoVistaPrevia() {
             </BreadcrumbItem>
         </BreadcrumbList>
     </Breadcrumb>
-
-    <Link className='flex gap-2 text-white w-fit p-2 rounded-md bg-secondary-gradient' to='../editando'>
-      <SquarePen />
-      <span>Editar</span>
-    </Link>
-
-      <div className="flex flex-col gap-2 md:flex-row justify-between items-center ">
-        <p>Este curso {!curso.is_public && 'NO'} es público</p>
-      </div>
-
-      <h2 className='text-4xl'>{curso.title}</h2>
-
-        <figure className=''>
-          <img 
-            className=''
-            src={curso?.image} 
-            alt={curso.title} />
-        </figure>
-        
-        {curso?.categories && 
-        <div>
-          <h4>Categorías</h4>
-          <div className='flex gap-2'>
-            {curso?.categories.map((category) => (
-              <Badge key={category.id}>{category.name}</Badge>
-            ))}
-          </div>
-        </div>
-        }
-
-        {curso?.topics && 
-        <div>
-          <h4>Temas</h4>
-          <div className='flex gap-2'>
-            {curso?.topics.map((topic) => (
-              <Badge key={topic.id}>{topic.name}</Badge>
-            ))}
-          </div>
-        </div>
-        }
-
-        {isEdited
+    
+    <div className='my-2'>
+      <p >Este curso {!curso.is_public && 'NO'} es público</p>
+      {isEdited
           ? (<p className=''>Actualizado el {formatearFecha(curso.updated)}</p>)
           : (<p className=''>Creado el {formatearFecha(curso.created)}</p>)
-        }
+      }
+    </div>
+
+    <Link className='my-2 flex gap-2 text-white w-fit p-2 rounded-md bg-secondary-gradient' to='../editando'>
+      <SquarePen />
+      <span>Editar Curso</span>
+    </Link>
+
+    
+    <div className='flex gap-4 justify-between relative items-start'>
+
+      <div className='max-w-3xl'>
+
+        <h2 className='text-4xl'>{curso.title}</h2>
+
+          <figure className=''>
+            <img 
+              className=''
+              src={curso?.image} 
+              alt={curso.title} />
+          </figure>
+          
+          {curso?.categories && 
+            <div className='my-2 flex gap-2 items-end'>
+              <h3 className='leading-none' >Categorías</h3>
+              {curso?.categories.map((category) => (
+                <Badge key={category.id}>{category.name}</Badge>
+              ))}
+            </div>
+          }
+
+          {curso?.topics && 
+            <div className='my-2 flex gap-2 items-end'>
+              <h3 className='leading-none'>Temas</h3>
+              {curso?.topics.map((topic) => (
+                <Badge key={topic.id}>{topic.name}</Badge>
+              ))}
+            </div>
+          }
+          
+          <div ref={descriptionRef} className="editorjs my-4 flex flex-col gap-3">
+          </div>
+      </div>
+
+          <CardBuy
+            title={curso.title}
+            price='20.54'
+            link='https://keinermendoza.com'
+          />  
+      </div>
         
-        <div ref={descriptionRef} class="editorjs flex flex-col gap-3">
-        </div>
+
         
     </section>
+  )
+}
+
+
+function CardBuy({title, price, link}) {
+  return (
+    <article className="sticky mt-10 top-20 bg-white w-full max-w-sm shadow-xl rounded-lg flex flex-col">
+       
+        
+        <div className="flex flex-col gap-1 p-4">
+            <h3 className="font-medium text-lg">{title}</h3>
+            <p className="font-medium font-lalezar text-lg">$ {price}</p>
+            
+            <a className='
+              relative cursor-pointer text-center
+              rounded text-white bg-primary-gradient
+              w-full text-lg px-6 py-2 sm:text-xl'
+              target='_blank' href={link}
+            >Comprar Curso</a>
+        </div>
+        
+    </article>
   )
 }
