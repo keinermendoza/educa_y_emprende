@@ -29,7 +29,7 @@ import {
     SelectValue,
   } from "@components/select"
 
-
+  import { Textarea } from "@components/textarea"
 import DialogInputCreate from '../../components/DialogInputCreate';
 import DropdownEditDelete from '../../components/DropdownEditDelete';
 
@@ -41,7 +41,13 @@ export default function CursoEditando() {
     const navigate = useNavigate()
 
     const [title, setTilte] = useState(curso?.title)
-    const [isPublic, setIsPublic] = useState(curso?.is_public)
+    const [link, setLink] = useState(curso?.link || '')
+    const [price, setPrice] = useState(curso?.price || '')
+    const [summary, setSummary] = useState(curso?.summary || '')
+
+
+
+    const [isPublic, setIsPublic] = useState(curso?.is_public || false)
 
     // image preview and file
     const [imagePreview, setImagePreview] = useState(curso?.image)
@@ -67,6 +73,7 @@ export default function CursoEditando() {
     const editorRef = useRef(null)
     const {initEditor, editorInstanceRef} = useContext(EditorContext)
     const initialDescription = useRef(curso?.description || {})
+
     useEffect(() => {
         if (!editorRef.current) {
             initEditor({id:id, data:initialDescription.current})
@@ -135,6 +142,11 @@ export default function CursoEditando() {
         reader.readAsDataURL(file)
     }
 
+    const handleSummaryChange = (e) => {
+        const value = e.target.value 
+        if (value.length > 152) return;
+        setSummary(value)
+    }
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -142,6 +154,7 @@ export default function CursoEditando() {
         let description
         try {
             description = await editorInstanceRef.current.save()
+            editorInstanceRef.current.destroy()
         } catch(err) {
             console.error(err)
         }
@@ -151,6 +164,11 @@ export default function CursoEditando() {
         formData.append('is_public', isPublic)
         formData.append('title', title)
         formData.append('brand', brand)
+        formData.append('link', link)
+        formData.append('price', price)
+        formData.append('summary', summary)
+
+
         categories.forEach(category => formData.append('categories', category));
         topics.forEach(topic => formData.append('topics', topic));
 
@@ -209,7 +227,8 @@ export default function CursoEditando() {
         </Breadcrumb>
         
             <h1 className='text-2xl w-fit mx-auto'>Editando curso: <span className='text-orange-500'>{title}</span></h1>
-            <form className='mx-auto w-full max-w-lg flex flex-col gap-4' method='post' onSubmit={handleSubmit} >
+            
+            <form className='mx-auto w-full max-w-3xl flex flex-col gap-4' method='post' onSubmit={handleSubmit} >
                 <Alert className='flex flex-col gap-2'>
                     <div className="flex flex-col space-y-1.5">
                     <Label className='text-lg' htmlFor="title">Nombre</Label>
@@ -275,6 +294,48 @@ export default function CursoEditando() {
                     </Select>
                 </Alert>
 
+                <Alert>
+                <div className="flex flex-col space-y-1.5">
+                    <Label className='text-lg' htmlFor="link">Link de Referido</Label>
+                    <Input 
+                        value={link}
+                        onInput={(e) => setLink(e.target.value)}
+                        name="link"
+                        id="link"
+                        placeholder="link proporcionado por hotmart" />
+                    </div>
+                </Alert>
+
+                <Alert>
+                <div className="flex flex-col space-y-1.5">
+                    <Label className='text-lg' htmlFor="price">Precio</Label>
+                    <Input 
+                        type='number'
+                        value={price}
+                        onInput={(e) => setPrice(e.target.value)}
+                        name="price"
+                        id="price"
+                        placeholder="99.99" />
+                    </div>
+                </Alert>
+
+                <Alert>
+                    <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor='summary' className='text-lg' >Resumen</Label>
+                        <p>Lo que escribas aquí aparecera en la tarjeta del curso</p>
+                        <Textarea
+                            value={summary}
+                            onInput={handleSummaryChange}
+                            name="summary"
+                            id="summary"
+                            placeholder="Escribe lo más interesante de este curso" />
+                        <p className='ms-auto text-gray-600'>Espacios usados {summary?.length}/152</p>
+
+                    </div>
+                </Alert>
+
+
+                
 
                 <Alert className='flex flex-col gap-2'>
                     <h4 className='text-lg'>Categorías</h4>
