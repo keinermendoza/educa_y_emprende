@@ -1,29 +1,32 @@
-{% load static %}
+{% load static my_editor %}
 <c-layout.base title="{{curso.title}}">
     <c-slot name="script">
     </c-slot>
 
 
-    <c-layout.section id="cursos" extra_class="pt-16">
-        <div class="flex gap-2 xl:gap-4">
-           
-            <main class=" to-blue-600">
-                <h1 class=" text-4xl mb-4">{{curso.title}}</h1>
-                <figure class="rounded-md w-full">
-                    <img class="object-cover w-full h-full" src="{% static 'core/images/jardin.jpg' %}" alt="<curso.title>">
-                </figure>
-                <p>
-                    "curso.descripiton.json"
-                </p>
-            </main>
-            <aside class="hidden xs:flex  rounded-md  flex-col text-lg xl:text-xl  w-full max-w-56 xl:max-w-72">
-                <div class="sticky rounded-md shadow-lg flex flex-col gap-2">
-                    <p class="font-lalezar">{{curso.title}}</p>
-                    <p class="font-lalezar">{{curso.price}} </p>
-                </div>
+    <c-layout.section id="curso-{{curso.title}}" extra_class="pt-16 xl:pt-20 w-full mx-auto max-w-screen-lg">
+            <div class='flex gap-4 justify-between relative items-start'>
             
-            </aside>
-        </div>
+                <main class=" to-blue-600">
+                    <h1 class=" text-4xl mb-4">{{curso.title}}</h1>
+                    <figure class="my-1 w-full rounded-md bg-gray-500">
+                        {% if curso.image %}
+                        <img class="object-cover w-full h-full" src="{{curso.image.url}}" alt="curso {{curso.title}}">
+                        {% endif %}
+                    </figure> 
+                    <c-buy_button
+                        link={{curso.link}}
+                        extra_class='block md:hidden'/>  
+                    <div class="editorjs my-4 flex flex-col gap-3">{{curso.description|editorjs}}</div>
+                </main>
+
+                <c-card_buy
+                    title={{curso.title}}
+                    price={{curso.price}}
+                    link={{curso.link}}
+                    extra_class='hidden md:flex'/>  
+            </div>
+
     </c-layout.section>
 
     <c-sections.contacto />

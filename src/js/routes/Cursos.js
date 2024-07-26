@@ -14,7 +14,7 @@ export default function Cursos() {
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [currentPage, setCurrentPage] = useState(searchParams.get('page')) 
-
+  const currentPageRef = useRef(null);
 
   const [brands, setBrands] = useState([]);
   const [title, setTitle] = useState(searchParams.get('title') || '');
@@ -31,7 +31,7 @@ export default function Cursos() {
 
   const [brandsSelected, setBrandsSelected] = useState(searchParams.getAll('brand') || [])
   const [topicsSelected, setTopicsSelected] = useState(searchParams.getAll('topics') || [])
-
+  
 
   const [categoriesSelected, setCategoriesSelected] = useState(searchParams.getAll('categories') || [])
 
@@ -66,6 +66,12 @@ export default function Cursos() {
   };
 
   const handleChangePage = (page) => {
+    currentPageRef.current.scrollIntoView()
+    if (currentPage > page) {
+      currentPageRef.current.style.animation = "prevPage .5s forwards";
+    } else {
+      currentPageRef.current.style.animation = "nextPage .5s forwards";
+    }
     setCurrentPage(page)
   }
 
@@ -200,6 +206,7 @@ export default function Cursos() {
             <h4 class="text-center text-4xl mb-6">Bienvenido a Nuestro Panel de Busqueda</h4>
             <SearchBar handleSearch={handleTitleChange} />
             <CursoList
+              pageRef={currentPageRef}
               count={count}
               cursos={cursos}
               search={title}

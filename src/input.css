@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
 [x-cloak] {
   display: none;
 }
@@ -32,6 +35,30 @@
     @apply w-full object-cover;
   }
   
+}
+
+@keyframes nextPage {
+  0% {
+    opacity: 0;
+    transform: translate(10em, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes prevPage {
+  0% {
+    opacity: 0;
+    transform: translate(-10em, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 }
 
 

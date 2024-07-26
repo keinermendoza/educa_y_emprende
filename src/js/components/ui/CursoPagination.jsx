@@ -1,5 +1,6 @@
 import React from 'react'
 import SecondaryButton from './SecondaryButton'
+import { CircleArrowLeft, CircleArrowRight  } from "lucide-react"
 
 export default function CursoPagination({handleChangePage, nextPage, prevPage}) {
   return (
@@ -7,16 +8,16 @@ export default function CursoPagination({handleChangePage, nextPage, prevPage}) 
         <ul className='flex justify-between items-center w-full gap-2'>
             {prevPage &&
             <li>
-                <SecondaryButton
+                <SecondaryButton rounded='p-2'
                 handleOnClick={() => handleChangePage(prevPage)}
-                >Anterior</SecondaryButton>
+                ><CircleArrowLeft /></SecondaryButton>
             </li>
             }
             {nextPage &&
             <li>
-                <SecondaryButton
+                <SecondaryButton rounded='p-2'
                 handleOnClick={() => handleChangePage(nextPage)}
-                >Siguiente</SecondaryButton>
+                ><CircleArrowRight /></SecondaryButton>
             </li>
             }
 
