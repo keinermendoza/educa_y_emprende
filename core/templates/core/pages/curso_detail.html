@@ -14,10 +14,44 @@
                         <img class="object-cover w-full h-full" src="{{curso.image.url}}" alt="curso {{curso.title}}">
                         {% endif %}
                     </figure> 
+
+                    {% comment %} {curso?.topics && 
+                        <div className='my-2 flex flex-wrap gap-2 items-end'>
+                          <h3 className='leading-none' >Categorías</h3>
+                          {curso?.categories.map((category) => (
+                            <Badge key={category.id}>{category.name}</Badge>
+                          ))}
+                        </div>
+                      } {% endcomment %}
+                    {% with categories=curso.categories.all %}
+                    {% if categories %}
+                        <div class='my-2 flex flex-wrap gap-2 items-end'>
+                            <h3 class='leading-none' >Categorías</h3>
+                            {% for category in categories %}
+                            <c-badge>{{category.name}}</c-badge>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% endwith %}
+
+                    {% with topics=curso.topics.all %}
+                    {% if topics %}
+                        <div class='my-2 flex flex-wrap gap-2 items-end'>
+                            <h3 class='leading-none' >Categorías</h3>
+                            {% for topic in topics %}
+                            <c-badge>{{topic.name}}</c-badge>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% endwith %}
+
                     <c-buy_button
                         link={{curso.link}}
                         extra_class='block md:hidden'/>  
                     <div class="editorjs my-4 flex flex-col gap-3">{{curso.description|editorjs}}</div>
+                    <c-buy_button
+                        link={{curso.link}}
+                        extra_class='block md:hidden'/>  
                 </main>
 
                 <c-card_buy

@@ -113,6 +113,11 @@ export default function CursoVistaPrevia() {
 
           <div ref={descriptionRef} className="editorjs my-4 flex flex-col gap-3">
           </div>
+          
+          <BuyButton
+            link={curso?.link}
+            extraClass='block md:hidden'
+          /> 
       </div>
 
           <CardBuy

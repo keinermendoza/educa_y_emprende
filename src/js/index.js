@@ -20,11 +20,26 @@ document.addEventListener("DOMContentLoaded", () => {
             1280: {
                 slidesPerView: 4,
             },
-        }, injectStyles: [
+        },
+    
+        
+        injectStyles: [
             `
             :host  {
                 display: grid;
             }
+            .swiper-button-next,
+            .swiper-button-prev {
+                background-color: white;
+                background-position: center;
+                background-size: 40px;
+                background-repeat: no-repeat;
+                padding: 8px 16px;
+                border-radius: 100%;
+                border: 2px solid black;
+                color: red;
+            }
+
             @media(max-width: 640px) {
                 :host {
                     display: flex;
@@ -35,12 +50,27 @@ document.addEventListener("DOMContentLoaded", () => {
           ],
       
     }
-        
+    
+    
     const swiperElements = document.querySelectorAll('swiper-container');
-    console.log(swiperElements)
     swiperElements.forEach((swip) => {
         Object.assign(swip, breakpoints);
+
+        const customNextBtn = swip.parentElement.querySelector('.customNextBtn')
+        const customPrevtBtn = swip.parentElement.querySelector('.customPrevBtn')
+        
+        customNextBtn.addEventListener('click', () => {
+            swip.swiper.slideNext();
+        });
+        
+        customPrevtBtn.addEventListener('click', () => {
+            swip.swiper.slidePrev();
+        });
+      
+        
     })
+
     swipperRegister();
+
 
 });

@@ -1,0 +1,9 @@
+.swiper-container {
+    display: grid;
+}
+@media(max-width: 640px) {
+    .swiper-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
