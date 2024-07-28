@@ -37,19 +37,12 @@ import { Button } from "@components/button"
 import { Input } from "@components/input"
 import { Label } from "@components/label"
 
-// import { DataTable } from "../../components/CursoTable";
-import {CursosListActionDropdown, CursosListActionButtons} from "../../components/CursosListActions";
+import {CursosListActionDropdown, CursosListActionButtons} from "../../components/editor/CursosListActions";
 
 import { formatearFecha } from "../../utils/utils";
 
 export default function Cursos() {
-  // const submit = useSubmit()
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   submit(e.currentTarget)
-  //   e.currentTarget?.reset()
-  // }
   const createFormRef = useRef()
   const titleInputRef = useRef()
   const {cursos} = useLoaderData()
@@ -109,7 +102,7 @@ export default function Cursos() {
 
         <h2 className="text-3xl">Cursos Registrados</h2>
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableCaption>Lista con los ultimos cursos creados</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Status</TableHead>

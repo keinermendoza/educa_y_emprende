@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useContext, useState } from 'react'
 import { EditorContext } from '../../contexts/EditorContext';
 import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import {axiosInstance} from '../../services/axios';
-// import Switch from "react-custom-checkbox/switch";
 import ReactFileReader from "react-file-reader";
 import { Link } from 'react-router-dom';
 
@@ -30,8 +29,8 @@ import {
   } from "@components/select"
 
   import { Textarea } from "@components/textarea"
-import DialogInputCreate from '../../components/DialogInputCreate';
-import DropdownEditDelete from '../../components/DropdownEditDelete';
+import DialogInputCreate from '../../components/editor/DialogInputCreate';
+import DropdownEditDelete from '../../components/editor/DropdownEditDelete';
 
 import { Alert, AlertDescription, AlertTitle } from "@components/alert"
 

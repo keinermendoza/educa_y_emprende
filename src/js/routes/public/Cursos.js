@@ -1,8 +1,8 @@
 import React from 'react'
-import {axiosInstance} from '../services/axios';
-import FilterAside from '../components/ui/FilterAside';
-import CursoList from '../components/ui/CursoList';
-import SearchBar from '../components/ui/SearchBar';
+import {axiosInstance} from '../../services/axios';
+import FilterAside from '../../components/public/FilterAside';
+import CursoList from '../../components/public/CursoList';
+import SearchBar from '../../components/public/SearchBar';
 import { useSearchParams } from 'react-router-dom';
 // import { useLoaderData } from 'react-router-dom';
 
@@ -25,9 +25,6 @@ export default function Cursos() {
   const [categories, setCategories] = useState([])
 
   const initialLoad = useRef(true)
-
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
 
   const [brandsSelected, setBrandsSelected] = useState(searchParams.getAll('brand') || [])
   const [topicsSelected, setTopicsSelected] = useState(searchParams.getAll('topics') || [])
@@ -109,9 +106,7 @@ export default function Cursos() {
         const endpoint = "filter/cursos" + "?" + searchParams.toString()
         const response = await axiosInstance.get(endpoint);
       
-        // if (!response.ok) {
-        //   throw new Error('Error en la solicitud');
-        // }
+       
         if (initialLoad.current) {
           setBrands(response.data.extra.categories)
           setCategories(response.data.extra.categories)
@@ -130,15 +125,10 @@ export default function Cursos() {
         
       } catch (error) {
         console.error(error)
-        // setError(error.message);
       } 
-      // finally {
-      //   setLoading(false);
-      // }
+    
     };
-    // const scrollPosition = window.innerHeight;
     getCursos()
-    // window.scrollTo(0, document.documentElement.scrollHeight);
     
   }, 
   [searchParams]);
@@ -221,9 +211,4 @@ export default function Cursos() {
 
   )
 }
-
-// export async function CursosLoader() {
-//     const resp = await axiosInstance.get("filter/cursos");
-//     return {cursos: resp.data};
-//   }
 

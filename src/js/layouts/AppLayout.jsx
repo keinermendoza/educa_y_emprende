@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router";
 // import StatLink from "../components/StatLink";
-import StatLink from "../components/StatLink";
+import StatLink from "../components/editor/StatLink";
 
 export default function AppLayout() {
     return (

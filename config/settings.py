@@ -147,7 +147,7 @@ DATABASES = {
 
 # Statics
 
-USE_S3 = os.getenv('USE_S3') == 'TRUE'
+USE_S3 = bool(int(os.getenv('USE_S3', '0')))
 
 if USE_S3:
     AWS_S3_ACCESS_KEY_ID = os.getenv('AWS_S3_ACCESS_KEY_ID')

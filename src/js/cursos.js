@@ -3,7 +3,7 @@ import ReactDOM  from 'react-dom/client'
 
 // import App from './App'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Cursos from './routes/Cursos';
+import Cursos from './routes/public/Cursos';
 // import { CursosLoader } from './routes/Cursos';
 
 const Outro = () => {

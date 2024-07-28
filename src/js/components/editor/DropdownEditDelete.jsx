@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { axiosInstance } from '../services/axios'
+import { axiosInstance } from '../../services/axios'
 import { MoreHorizontal, Trash2, SquarePen, Eye } from "lucide-react"
  
 import {

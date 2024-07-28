@@ -15,7 +15,7 @@ def send_feedback_email(email_address, name, message):
     }
     html_message = render_to_string('core/mail/contact.html', context)
 
-    message = EmailMessage(subject, html_message, os.getenv("EMAIL_HOST_USER"), [email_address])
+    message = EmailMessage(subject, html_message, os.getenv("EMAIL_FROM"), [email_address])
     message.content_subtype = 'html' # this is required because there is no plain text email message
     message.send()
 
@@ -24,7 +24,7 @@ def send_mail_to_owner(email_address, name, message):
     send_mail(
         f"Recibiste un mensaje de {name}",
         f"Responder a: {email_address}\n\n{message}",
-        os.getenv("EMAIL_HOST_USER"),
+        os.getenv("EMAIL_FROM"),
         [os.getenv("EMAIL_OWNER")],
         fail_silently=False,
     )

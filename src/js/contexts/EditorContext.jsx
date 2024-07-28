@@ -6,7 +6,7 @@ import Header from "@editorjs/header"
 import List from "@editorjs/list"
 import ImageTool from '@editorjs/image';
 import {axiosInstance} from "../services/axios";
-import CustomImage from "../components/Image";
+import CustomImage from "../components/editor/Image";
 export const EditorContext = createContext()
 
 function EditorContextProvider(props) {

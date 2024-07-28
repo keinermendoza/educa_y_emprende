@@ -2,15 +2,23 @@
 <article class="bg-white h-full overflow-hidden shadow-xl rounded-lg flex flex-col">
     <!-- image -->
     <figure class="h-56 w-full bg-gray-500">
-        {% if img %}
-        <img class="transition-transform duration-300 hover:scale-110 object-cover h-full w-full" src="{{img.url}}" alt="curso {{title}}">
-        {% endif %}
+        {{image}}        
     </figure> 
     
     <div class="flex-1 flex flex-col gap-3 md:gap-4 p-4">
         <h4 class="font-medium text-xl sm:text-[1.65rem]">{{title}}</h4>
         <p class="flex-grow leading-tight text-base">{{summary}}</p>
-        <p class="leading-tight text-base sm:text-lg">{{categories}}</p>
+
+        <p>
+        {% for category in categories  %}
+            <span class="font-semibold">{{category.name}} {% if forloop.last %}:{% else %}&{% endif %}</span>
+        {% endfor %}
+
+        {% for topic in topics  %}
+            <span class="">{{topic.name}}{% if not forloop.last %} | {% endif %}</span>
+        {% endfor %}
+        </p>
+
         <c-primary_link_button href="{{href}}" extra_class="ml-auto" >Ver Más</c-link_button>
     </div>
     

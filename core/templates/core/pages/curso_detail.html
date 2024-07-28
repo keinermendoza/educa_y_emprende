@@ -15,14 +15,6 @@
                         {% endif %}
                     </figure> 
 
-                    {% comment %} {curso?.topics && 
-                        <div className='my-2 flex flex-wrap gap-2 items-end'>
-                          <h3 className='leading-none' >Categorías</h3>
-                          {curso?.categories.map((category) => (
-                            <Badge key={category.id}>{category.name}</Badge>
-                          ))}
-                        </div>
-                      } {% endcomment %}
                     {% with categories=curso.categories.all %}
                     {% if categories %}
                         <div class='my-2 flex flex-wrap gap-2 items-end'>
@@ -37,7 +29,7 @@
                     {% with topics=curso.topics.all %}
                     {% if topics %}
                         <div class='my-2 flex flex-wrap gap-2 items-end'>
-                            <h3 class='leading-none' >Categorías</h3>
+                            <h3 class='leading-none' >Temas</h3>
                             {% for topic in topics %}
                             <c-badge>{{topic.name}}</c-badge>
                             {% endfor %}

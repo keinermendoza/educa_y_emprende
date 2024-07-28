@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react'
 import { useLoaderData, Link } from 'react-router-dom'
 import edjsHTML from "editorjs-html"
-import PrimaryButton from '../../components/ui/PrimaryButton'
 
 import {
   Breadcrumb,

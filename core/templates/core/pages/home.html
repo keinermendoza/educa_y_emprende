@@ -110,22 +110,24 @@
         <div class="my-swipper-full-wrapper relative">
 
             <swiper-container class="w-full" autoplay="true"  slides-per-view="1" space-between="20" grab-cursor="true" speed="3000" loop="true">
-                {% for curso in cursos_profesionales %}
+                {% for curso in cursos %}
+
                 <swiper-slide  >
-                    <c-curso_card title={{curso.title}} href="{{curso.get_absolute_url}}" img="{{curso.image}}" >
-                        <c-slot name="summary">{{curso.summary}}</c-slot>
-                        <c-slot name="categories">
-                            {% for sub_cateogry in curso.sub_categories.all %}
-                            <span>{{sub_cateogry}}{% if not forloop.last %} | {% endif %}</span>
-                            {% endfor %}
+                    <c-curso_card title="{{curso.title}}" :categories="curso.categories.all" :topics="curso.topics.all"  href="{{curso.get_absolute_url}}" >
+                        <c-slot name="image">
+                            {% if curso.image %}
+                            <img class="transition-transform duration-300 hover:scale-110 object-cover h-full w-full" src="{{curso.image.url}}" alt="curso {{curso.title}}">
+                            {% endif %}
                         </c-slot>
+                        <c-slot name="summary">{{curso.summary}}</c-slot>
+
                     </c-curso_card >
 
                 </swiper-slide>
                 {% endfor %}
                 
             </swiper-container>
-            <div class="hidden sm:flex text-violet-600 custom-navigation absolute w-full max-w-7xl mx-auto top-[60%] 2xl:top-[50%] left-0 h-fit justify-between bg-yellow-500">
+            <div class="hidden sm:flex text-violet-600 custom-navigation absolute w-full max-w-7xl mx-auto top-[60%] 2xl:top-[50%] left-0 h-fit justify-between ">
                 <button class="customPrevBtn bg-gray-400 bg-opacity-50 sm:-translate-x-5 2xl:-translate-x-14
                     transition-all duration-200 hover:scale-110 hover:text-white hover:bg-violet-600 rounded-full relative z-30">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 2xl:size-12">
