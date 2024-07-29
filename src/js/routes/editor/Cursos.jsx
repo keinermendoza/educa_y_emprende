@@ -113,7 +113,7 @@ export default function Cursos() {
           </TableHeader>
           <TableBody>
 
-            {cursos?.results?.map(curso => (
+            {cursos?.map(curso => (
             <TableRow key={curso.id}>
 
               <TableCell 

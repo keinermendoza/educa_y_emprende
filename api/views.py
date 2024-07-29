@@ -127,6 +127,8 @@ class CursosListEditorAPIView(ListCreateAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = CursoEditorSerializer
     queryset = Curso.objects.all()
+    pagination_class = None
+
 
 class CursoRetriveUpdateDestroy(RetrieveAPIView, DestroyAPIView):
     permission_classes = [IsAdminUser]

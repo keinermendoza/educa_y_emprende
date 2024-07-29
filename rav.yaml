@@ -1,4 +1,11 @@
 rav:
+  dev: docker compose up
+  dev-down: docker compose down
+
+  stage: docker compose -f docker-compose.stage.yml up
+  stage-down: docker compose -f docker-compose.stage.yml down
+
+
   web: docker exec -it educa_y_emprende-web-1 bash
   createsuperuser: docker exec -it educa_y_emprende-web-1 python manage.py createsuperuser
   makemigrations: docker exec -it educa_y_emprende-web-1 python manage.py makemigrations
@@ -6,6 +13,8 @@ rav:
   seeder: docker exec -it educa_y_emprende-web-1 python manage.py seeder
   flush: docker exec -it educa_y_emprende-web-1 python manage.py flush
   db: docker exec -it educa_y_emprende-db-1 bash
+  collect: docker exec -it educa_y_emprende-web-1 python manage.py collectstatic
+
 
 
 

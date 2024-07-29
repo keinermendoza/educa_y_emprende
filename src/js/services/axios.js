@@ -9,7 +9,7 @@ import axios from 'axios';
 
 // // Crear una instancia de axios
  const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/', // Ajusta esto según tu configuración
+    baseURL: process.env.REACT_API_ENDPOINT, // Ajusta esto según tu configuración
     withCredentials: true, // Esto asegura que se envíen las cookies con cada solicitud
     xsrfCookieName: 'csrftoken',
     xsrfHeaderName: "X-CSRFTOKEN"

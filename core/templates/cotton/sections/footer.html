@@ -8,9 +8,9 @@
         <nav class="text-center hidden sm:block" id="footer-other-pages-nav">
             <h4 class="mb-3 xl:mb-5 text-lg xl:text-xl">TODAS LAS PAGINAS</h4>
             <ul class="flex flex-col gap-1">
-                <c-navlink href="core:home">Pagina Principal</c-navlink>
-                <c-navlink href="core:home">Desarrollo Personal</c-navlink>
-                <c-navlink href="core:home">Crecimiento Profesional</c-navlink>
+                <c-navlink href="{% url 'core:home' %}">Pagina Principal</c-navlink>
+                <c-navlink href="{% url 'core:cursos' %}?brand=per">Desarrollo Personal</c-navlink>
+                <c-navlink href="{% url 'core:cursos' %}?brand=pro">Crecimiento Profesional</c-navlink>
             </ul>
         </nav>
 

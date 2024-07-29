@@ -1,0 +1,37 @@
+services:
+  web:
+    image: keinermendoza/educayemprende:v1.0.0
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        . /usr/src/app/entrypoint.prod.sh
+        gunicorn config.wsgi:application --bind 0.0.0.0:8001
+    ports:
+      - 8001:8001
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+  
+  rabbitmq:
+    image: rabbitmq:3.13-management
+  
+  celery:
+    image: keinermendoza/educayemprende:v1.0.0
+    command: celery --app=config worker -l INFO
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - rabbitmq
+      - web
+  
+  db:
+    image: postgres:16-bullseye
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.database
+
+volumes:
+  postgres_data_prod:
