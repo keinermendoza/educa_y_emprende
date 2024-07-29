@@ -1,1 +1,9 @@
 node_modules
+**/static
+**/staticfiles
+**/media
+.env
+.env.prod
+.env.dev
+.env.database
+.git

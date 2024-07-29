@@ -1,12 +1,62 @@
 {% load static %}
+<c-vars 
+    meta_title="Educa y Emprende"
+    meta_description="Nuestro propósito es ayudarte a descubrir y desarrollar tus habilidades. Nos emociona compartir contigo nuestra selección de cursos y contribuir con nuestro conocimiento al cumplimiento de tus metas."
+    meta_url="https://educayemprende.net/"
+    meta_site_name="Cursos de Formación Profesional y Desarrollo Personal"
+    meta_url_image="https://objectstorage.us-ashburn-1.oraclecloud.com/n/id8ztu6vhbyl/b/educa-y-emprende-public/o/educa_y_emprende.png"
+
+    />
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+    <link rel="canonical" href="{{meta_url}}">
+    
+    <meta name="title" content="{{meta_title}}">
+    <meta name="description" content="{{meta_description}}">
+    
+    <meta property="og:title" content="{{meta_title}}">
+    <meta property="og:description" content="{{meta_description}}">
+    
+    <meta property="og:site_name" content="{{meta_site_name}}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{meta_url}}">
+    
+    
+
+    <meta charset="UTF-8">
+    <meta name="author" description="keiner mendoza" >
+    <meta property="og:image" content="{{meta_url_image}}" />
+
+    
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{meta_url}}">
+    <meta property="twitter:title" content="{{meta_title}}.">
+    <meta property="twitter:description" content="{{meta_description}}">
+    <meta property="twitter:image" content="{{meta_url_image}}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'core/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/icons/favicon-16x16.png' %}">
+    <link rel="icon" href="{% static 'core/icons/favicon.ico' %}" type="image/x-icon" />
+    <link rel="manifest" href="{% static 'core/icons/site.webmanifest' %}">
+    
     <title>Educa y Emprende | {{ title }}</title>
     <script defer src="{% static 'js/vendor.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+
+    
     <c-fonts />
 
     {{ script }}
