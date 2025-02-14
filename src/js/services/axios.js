@@ -9,7 +9,9 @@ import axios from 'axios';
 
 // // Crear una instancia de axios
  const axiosInstance = axios.create({
-    baseURL: process.env.REACT_API_ENDPOINT, // Ajusta esto según tu configuración
+    // baseURL: process.env.REACT_API_ENDPOINT, // Ajusta esto según tu configuración
+    baseURL: '/api/', // Ajusta esto según tu configuración
+    
     withCredentials: true, // Esto asegura que se envíen las cookies con cada solicitud
     xsrfCookieName: 'csrftoken',
     xsrfHeaderName: "X-CSRFTOKEN"
